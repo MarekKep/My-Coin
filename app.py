@@ -1,21 +1,15 @@
-import os
-
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required
 
 # Configure application
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-
-# Custom filter
-app.jinja_env.filters["usd"] = usd
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
@@ -24,10 +18,6 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///my_coin.db")
-
-# Make sure API key is set
-if not os.environ.get("API_KEY"):
-    raise RuntimeError("API_KEY not set")
 
 
 @app.after_request
@@ -42,6 +32,7 @@ def after_request(response):
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
+    return render_template("index.html")
     # if request.method == "POST":
     #     money = request.form.get("money")
     #     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
@@ -81,9 +72,10 @@ def index():
     #     except TypeError:
     #         return redirect("/")
 
-@app.route("/buy", methods=["GET", "POST"])
+@app.route("/wallet")
 @login_required
-def buy():
+def wallet():
+    return apology("FUCK",404)
     # """Buy shares of stock"""
     # if request.method == "POST":
     #     symbol = request.form.get("symbol")
@@ -107,9 +99,10 @@ def buy():
     #     return render_template("buy.html")
 
 
-@app.route("/history")
+@app.route("/statistics")
 @login_required
-def history():
+def statistics():
+    return apology("FUCK",404)
     # """Show history of transactions"""
     # buy = db.execute("SELECT * FROM buy WHERE buy_id = ? ORDER BY daytime DESC", session["user_id"])
     # sell = db.execute("SELECT * FROM sell WHERE sell_id = ? ORDER BY daytime DESC", session["user_id"])
@@ -145,7 +138,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/home")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -163,9 +156,10 @@ def logout():
     return redirect("/")
 
 
-@app.route("/quote", methods=["GET", "POST"])
+@app.route("/home")
 @login_required
-def quote():
+def home():
+    return apology("FUCK",404)
     # """Get stock quote."""
     # if request.method == "POST":
     #     stock = lookup(request.form.get("symbol"))
@@ -198,9 +192,10 @@ def register():
         return render_template("register.html")
 
 
-@app.route("/sell", methods=["GET", "POST"])
+@app.route("/cashflow")
 @login_required
-def sell():
+def cashflow():
+    return apology("FUCK",404)
     # """Sell shares of stock"""
     # if request.method == "POST":
     #     symbol = request.form.get("symbol")
