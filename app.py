@@ -29,10 +29,10 @@ def after_request(response):
     return response
 
 
-@app.route("/", methods=["GET", "POST"])
-@login_required
-def index():
-    return render_template("index.html")
+# @app.route("/", methods=["GET", "POST"])
+# @login_required
+# def index():
+#     return render_template("index.html")
     # if request.method == "POST":
     #     money = request.form.get("money")
     #     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
@@ -75,7 +75,7 @@ def index():
 @app.route("/wallet")
 @login_required
 def wallet():
-    return apology("FUCK",404)
+    return render_template("emptywallet.html")
     # """Buy shares of stock"""
     # if request.method == "POST":
     #     symbol = request.form.get("symbol")
@@ -102,7 +102,7 @@ def wallet():
 @app.route("/statistics")
 @login_required
 def statistics():
-    return apology("FUCK",404)
+    return render_template("statistics.html")
     # """Show history of transactions"""
     # buy = db.execute("SELECT * FROM buy WHERE buy_id = ? ORDER BY daytime DESC", session["user_id"])
     # sell = db.execute("SELECT * FROM sell WHERE sell_id = ? ORDER BY daytime DESC", session["user_id"])
@@ -156,10 +156,10 @@ def logout():
     return redirect("/")
 
 
-@app.route("/home")
+@app.route("/")
 @login_required
 def home():
-    return apology("FUCK",404)
+    return render_template("home.html")
     # """Get stock quote."""
     # if request.method == "POST":
     #     stock = lookup(request.form.get("symbol"))
@@ -195,7 +195,7 @@ def register():
 @app.route("/cashflow")
 @login_required
 def cashflow():
-    return apology("FUCK",404)
+    return render_template("cashflow.html")
     # """Sell shares of stock"""
     # if request.method == "POST":
     #     symbol = request.form.get("symbol")
