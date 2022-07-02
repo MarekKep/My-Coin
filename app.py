@@ -1,16 +1,20 @@
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, url_for
+from flask_mail import Mail, Message
 from flask_session import Session
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required
 
 # Configure application
 app = Flask(__name__)
-
+app.config.from_pyfile('config.cfg')
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
+mail = Mail(app)
+s = URLSafeTimedSerializer('Thisisasecret!')
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -134,11 +138,14 @@ def login():
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
             return apology("invalid username and/or password", 400)
 
+        if rows[0]['confirmed'] == "False":
+            return apology( f"you do not confirmed your email { rows[0]['confirmed'] }", 400)
+
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/home")
+        return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -169,7 +176,7 @@ def home():
     # else:
     #     return render_template("quote.html")
 
-
+name = 0
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
@@ -181,13 +188,30 @@ def register():
         confirmation = request.form.get("confirmation")
         if not password or not confirmation or password != confirmation:
             return apology("different passwords", 400)
-        if db.execute("SELECT username FROM users WHERE username = ?", request.form.get("username")):
+        if db.execute("SELECT username FROM users WHERE username = ?", username):
             return apology("username is already exists", 400)
         else:
-            db.execute("INSERT INTO users(username, hash) VALUES(?, ?)", username, generate_password_hash(password, method='pbkdf2:sha256', salt_length=8))
-            rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+            try:
+                token = s.dumps(username, salt='email-confirm')
+
+
+                msg = Message('Confirm Email', sender='my_coin@yahoo.com', recipients=[username])
+
+                link = url_for('confirm_email', token=token, _external=True)
+
+                msg.body = 'Your link is {} tap on it to complete registration'.format(link)
+
+                mail.send(msg)
+
+                db.execute("INSERT INTO users(username, hash, confirmed) VALUES(?, ?, 'False')", username, generate_password_hash(password, method='pbkdf2:sha256', salt_length=8))
+                rows = db.execute("SELECT * FROM users WHERE username = ?", username)
+                global name 
+                name = username
+            except:
+                return apology("please enter correct email", 400)
             session["user_id"] = rows[0]["id"]
-            return redirect("/")
+            return redirect("/login")
+        
     else:
         return render_template("register.html")
 
@@ -227,3 +251,37 @@ def cashflow():
     # else:
     #     sumpurchases = db.execute("SELECT * FROM sumpurchases WHERE sumpurchase_id = ?", session["user_id"])
     #     return render_template("sell.html",sumpurchases=sumpurchases )
+# @app.route('/', methods=['GET', 'POST'])
+# def index():
+#     if request.method == 'GET':
+#         return '<form action="/" method="POST"><input name="email"><input type="submit"></form>'
+
+#     email = request.form['email']
+#     token = s.dumps(email, salt='email-confirm')
+
+#     db.execute("INSERT INTO use (username,confirm)VALUES(?, 'False')", (email,))
+
+#     msg = Message('Confirm Email', sender='my_coin@yahoo.com', recipients=[email])
+
+#     link = url_for('confirm_email', token=token, _external=True)
+
+#     msg.body = 'Your link is {}'.format(link)
+
+#     mail.send(msg)
+
+#     return '<h1>The email you entered is {}. The token is {}</h1>'.format(email, token)
+
+@app.route('/confirm_email/<token>')
+def confirm_email(token):
+    rows = db.execute("SELECT * FROM users WHERE username = ?", name)
+    try:
+        username = s.loads(token, salt='email-confirm', max_age=3600)
+    except SignatureExpired:
+        if rows[0]['confirmed'] == "False":
+            db.execute("DELETE FROM users WHERE username = ?", name)
+        return '<h1>The token is expired!</h1>'
+    db.execute("UPDATE users SET confirmed = ? WHERE username = ?", 'True', name)
+    return '<h1>Congratulation you have confirmed your email, now you can login into your account</h1>'
+
+if __name__ == '__main__':
+    app.run(debug=True)
