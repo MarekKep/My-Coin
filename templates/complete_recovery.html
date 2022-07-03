@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Complete recovery
+{% endblock %}
+
+{% block main %}
+    <form action="/complete_recovery/<token>" method="post">
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="recover_password" name="recover_password" placeholder="Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+{% endblock %}

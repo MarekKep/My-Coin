@@ -1,3 +1,4 @@
+from lib2to3.pgen2 import token
 from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_mail import Mail, Message
@@ -15,6 +16,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 mail = Mail(app)
 s = URLSafeTimedSerializer('Thisisasecret!')
+ss = URLSafeTimedSerializer('asdqqweasdasd')
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -197,7 +199,7 @@ def register():
             try:
                 token = s.dumps(username, salt='email-confirm')
 
-                msg = Message('Confirm Email', sender='my_coin@yahoo.com', recipients=[username])
+                msg = Message('Confirm Email', sender='mycoinhelp@gmail.com', recipients=[username])
 
                 link = url_for('confirm_email', token=token, _external=True)
 
@@ -206,13 +208,13 @@ def register():
                 mail.send(msg)
 
                 db.execute("INSERT INTO users(username, hash, confirmed) VALUES(?, ?, 'False')", username,
-                           generate_password_hash(password, method='pbkdf2:sha256', salt_length=8))
+                generate_password_hash(password, method='pbkdf2:sha256', salt_length=8))
                 rows = db.execute("SELECT * FROM users WHERE username = ?", username)
+                session["user_id"] = rows[0]["id"]
                 global name
                 name = username
             except:
                 return apology("please enter correct email", 400)
-            session["user_id"] = rows[0]["id"]
             return redirect("/login")
 
     else:
@@ -287,6 +289,67 @@ def confirm_email(token):
         return '<h1>The token is expired!</h1>'
     db.execute("UPDATE users SET confirmed = ? WHERE username = ?", 'True', name)
     return '<h1>Congratulation you have confirmed your email, now you can login into your account</h1>'
+
+
+@app.route("/recovery_password", methods=['GET', 'POST'])
+def recovery_password():
+    if request.method == "POST":
+
+        email = request.form.get("email")
+        if not email:
+            return apology("You did not wrote your email", 400)
+        # # sending token to mail to recover password
+        try:
+            token = ss.dumps(email, salt='recover-password')
+
+            msg = Message('Complete Recovery', sender='mycoinhelp@gmail.com', recipients=[name])
+
+            link = url_for('complete_recovery', token=token, _external=True)
+
+            msg.body = 'Your link is {} tap on it to recover the password'.format(link)
+
+            mail.send(msg)
+        except:
+            return apology("please enter correct email")
+        return f"email:{email} token:{token}"
+    else:
+        return render_template("recovery_password.html")
+
+
+@app.route("/complete_recovery/<token>", methods=['GET', 'POST'])
+def complete_recovery(token):
+    # if request.method == "POST":
+
+
+        # changing forgotten password
+    #     db.execute("UPDATE users SET hash = ? WHERE username = ?", generate_password_hash(request.form.get("recover_password"), method='pbkdf2:sha256', salt_length=8), name)
+    #     return redirect("/login")
+    # else:
+    #     try:
+    username = ss.loads(token, salt='recover-password', max_age=3600)
+    return "Works"
+        # except SignatureExpired:
+        #     return '<h1>The token is expired!</h1>'
+        # return render_template("complete_recovery.html")
+
+
+@app.route("/settings", methods=['GET', 'POST'])
+def settings():
+    if request.method == "POST":
+        # changing password
+        rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+        if not request.form.get("oldpassword"):
+            return apology("must provide oldpassword", 400)
+        if not check_password_hash(rows[0]["hash"], request.form.get("oldpassword")):
+            return apology("please enter correct password", 400)
+        if check_password_hash(rows[0]["hash"], request.form.get("oldpassword")):
+            if not request.form.get("newpassword"):
+                return apology("must provide newpassword", 400)
+            else:
+                db.execute("UPDATE users SET hash = ? WHERE id = ?",generate_password_hash(request.form.get("newpassword"), method='pbkdf2:sha256', salt_length=8), session["user_id"])
+        return redirect("/login")
+    else:
+        return render_template("settings.html")
 
 
 if __name__ == '__main__':
