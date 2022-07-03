@@ -283,6 +283,7 @@ def confirm_email(token):
     rows = db.execute("SELECT * FROM users WHERE username = ?", name)
     try:
         username = s.loads(token, salt='email-confirm', max_age=3600)
+        token = 0
     except SignatureExpired:
         if rows[0]['confirmed'] == "False":
             db.execute("DELETE FROM users WHERE username = ?", name)
@@ -290,7 +291,7 @@ def confirm_email(token):
     db.execute("UPDATE users SET confirmed = ? WHERE username = ?", 'True', name)
     return '<h1>Congratulation you have confirmed your email, now you can login into your account</h1>'
 
-
+user = 0
 @app.route("/recovery_password", methods=['GET', 'POST'])
 def recovery_password():
     if request.method == "POST":
@@ -298,11 +299,14 @@ def recovery_password():
         email = request.form.get("email")
         if not email:
             return apology("You did not wrote your email", 400)
-        # # sending token to mail to recover password
+        global user
+        user = email
+        # sending token to mail to recover password
         try:
-            token = ss.dumps(email, salt='recover-password')
 
-            msg = Message('Complete Recovery', sender='mycoinhelp@gmail.com', recipients=[name])
+            token = ss.dumps(email, salt='recovery-password')
+
+            msg = Message('Complete Recovery', sender='mycoinhelp@gmail.com', recipients=[email])
 
             link = url_for('complete_recovery', token=token, _external=True)
 
@@ -318,19 +322,17 @@ def recovery_password():
 
 @app.route("/complete_recovery/<token>", methods=['GET', 'POST'])
 def complete_recovery(token):
-    # if request.method == "POST":
-
-
+    if request.method == "POST":
         # changing forgotten password
-    #     db.execute("UPDATE users SET hash = ? WHERE username = ?", generate_password_hash(request.form.get("recover_password"), method='pbkdf2:sha256', salt_length=8), name)
-    #     return redirect("/login")
-    # else:
-    #     try:
-    username = ss.loads(token, salt='recover-password', max_age=3600)
-    return "Works"
-        # except SignatureExpired:
-        #     return '<h1>The token is expired!</h1>'
-        # return render_template("complete_recovery.html")
+        db.execute("UPDATE users SET hash = ? WHERE username = ?", generate_password_hash(request.form.get("recoverpassword"), method='pbkdf2:sha256'), user)
+        return redirect("/login")
+    else:
+        try:
+            username = ss.loads(token, salt='recovery-password', max_age=3600)
+            return render_template("complete_recovery.html")
+        except SignatureExpired:
+            return '<h1>The token is expired!</h1>'
+
 
 
 @app.route("/settings", methods=['GET', 'POST'])

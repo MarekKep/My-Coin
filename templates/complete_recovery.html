@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/complete_recovery/<token>" method="post">
+    <form action="/complete_recovery/<token>" method="post","get">
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="recover_password" name="recover_password" placeholder="Password" type="password">
+            <input class="form-control mx-auto w-auto" id="recoverpassword" name="recoverpassword" placeholder="Password" type="password">
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>
