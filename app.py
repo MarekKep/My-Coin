@@ -1,4 +1,3 @@
-from lib2to3.pgen2 import token
 from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_mail import Mail, Message
@@ -7,7 +6,6 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required
-
 # Configure application
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
@@ -18,7 +16,7 @@ mail = Mail(app)
 s = URLSafeTimedSerializer('Thisisasecret!')
 ss = URLSafeTimedSerializer('asdqqweasdasd')
 # Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_PERMANENT"] = True
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
@@ -81,7 +79,12 @@ def after_request(response):
 @app.route("/wallet")
 @login_required
 def wallet():
-    return render_template("emptywallet.html")
+    my_coin = db.execute("SELECT * FROM cashflow WHERE cashflow_id = ?", session["user_id"])
+    try:
+        return render_template("wallet.html", my_coin = my_coin)
+    except TypeError:
+        render_template("emptywallet.html")
+
     # """Buy shares of stock"""
     # if request.method == "POST":
     #     symbol = request.form.get("symbol")
@@ -120,11 +123,10 @@ def login():
     """Log user in"""
 
     # Forget any user_id
-    session.clear()
+    # session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         # Ensure username was submitted
         if not request.form.get("username"):
             return apology("must provide username", 400)
@@ -142,6 +144,10 @@ def login():
 
         if rows[0]['confirmed'] == "False":
             return apology(f"you do not confirmed your email {rows[0]['confirmed']}", 400)
+        
+        if request.form.get("remember") != 'me':
+            session.clear()
+            app.config["SESSION_PERMANENT"] = False
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -151,6 +157,7 @@ def login():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
+        session.clear()
         return render_template("login.html")
 
 
@@ -221,10 +228,22 @@ def register():
         return render_template("register.html")
 
 
-@app.route("/cashflow")
+@app.route("/cashflow", methods=["GET", "POST"])
 @login_required
 def cashflow():
-    return render_template("cashflow.html")
+    if request.method == "POST":
+        if not request.form.get("income_count") or not request.form.get("income_currency") or not request.form.get("income_category"):
+            if not request.form.get("expense_count") or not request.form.get("expense_currency") or not request.form.get("expense_category"):
+                return apology("please correctly enter the expence or income form",400)
+            else:
+                db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'expense',?,?,?)", session["user_id"], request.form.get("expense_count"), request.form.get("expense_currency"), request.form.get("expense_category"))
+        else:
+            db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'income',?,?,?)", session["user_id"], request.form.get("income_count"), request.form.get("income_currency"), request.form.get("income_category"))
+            if request.form.get("expense_count") and request.form.get("expense_currency") and request.form.get("expense_category"):
+                db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'expense',?,?,?)", session["user_id"], request.form.get("expense_count"), request.form.get("expense_currency"), request.form.get("expense_category"))
+        return redirect("/wallet")
+    else:
+        return render_template("cashflow.html")
     # """Sell shares of stock"""
     # if request.method == "POST":
     #     symbol = request.form.get("symbol")
@@ -256,27 +275,6 @@ def cashflow():
     # else:
     #     sumpurchases = db.execute("SELECT * FROM sumpurchases WHERE sumpurchase_id = ?", session["user_id"])
     #     return render_template("sell.html",sumpurchases=sumpurchases )
-
-
-# @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     if request.method == 'GET':
-#         return '<form action="/" method="POST"><input name="email"><input type="submit"></form>'
-
-#     email = request.form['email']
-#     token = s.dumps(email, salt='email-confirm')
-
-#     db.execute("INSERT INTO use (username,confirm)VALUES(?, 'False')", (email,))
-
-#     msg = Message('Confirm Email', sender='my_coin@yahoo.com', recipients=[email])
-
-#     link = url_for('confirm_email', token=token, _external=True)
-
-#     msg.body = 'Your link is {}'.format(link)
-
-#     mail.send(msg)
-
-#     return '<h1>The email you entered is {}. The token is {}</h1>'.format(email, token)
 
 @app.route('/confirm_email/<token>')
 def confirm_email(token):

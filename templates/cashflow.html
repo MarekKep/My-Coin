@@ -5,7 +5,33 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/cashflow" method="get">
-        <h1>Here could be your Cashflow</h1>
+    <form action="/cashflow" method="post">
+        <label class="form-check-label" for="flexCheckDefault">
+            <h2>Income</h2>
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="income_count" name="income_count" placeholder="Count" type="number" min = 1>
+            </div>
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="income_currency" name="income_currency" placeholder="Currency" type="text">
+            </div>
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="income_category" name="income_category" placeholder="Category" type="text">
+            </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        </label>
+        <hr>
+        <label class="form-check-label" for="flexCheckDefault">
+            <h2>Expense</h2>
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="expense_count" name="expense_count" placeholder="Count" type="number" min = 1>
+            </div>
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="expense_currency" name="expense_currency" placeholder="Currency" type="text">
+            </div>
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="expense_category" name="expense_category" placeholder="Category" type="text">
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+            </label>
     </form>
 {% endblock %}
