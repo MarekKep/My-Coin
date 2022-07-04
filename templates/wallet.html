@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/wallet" method="get">
+    <form class="wallet-page" action="/wallet" method="get">
         <table id="tabula" class="table table-dark table-sm" >
             <tr>
                 <td>Count</td>
                 <td>Currency</td>
                 <td>Category</td>
                 <td>Date</td>
-                <td>Delete</td>
+                <td></td>
             </tr>
             {% for my_coin in my_coin %}
                 <tr>
@@ -20,8 +20,11 @@
                     <td>{{my_coin["currency"]}}</td>
                     <td>{{my_coin["category"]}}</td>
                     <td>{{my_coin["daytime"]}}</td>
-                    <td><button class="btn btn-primary" id = "{{my_coin["daytime"]}}" name = "{{my_coin["daytime"]}}" type="submit">Submit</button></td>
+                    <td><button class="btn delete-button" id = "{{my_coin["daytime"]}}" name = "{{my_coin["daytime"]}}" type="submit"><img class="trash-icon" src="../static/img/trash-icon.svg" alt="delete button">Delete</button></td>
                 </tr>
+                
             {% endfor %}
+            
     </form>
 {% endblock %}
+

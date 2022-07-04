@@ -1,0 +1,9 @@
+.delete-button {
+    color: white;
+}
+.delete-button:hover {
+    color: rgb(177, 18, 18);
+}
+.trash-icon {
+    padding-right: 10px;
+}
