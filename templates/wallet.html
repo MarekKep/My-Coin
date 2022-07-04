@@ -12,6 +12,7 @@
                 <td>Currency</td>
                 <td>Category</td>
                 <td>Date</td>
+                <td>Delete</td>
             </tr>
             {% for my_coin in my_coin %}
                 <tr>
@@ -19,6 +20,7 @@
                     <td>{{my_coin["currency"]}}</td>
                     <td>{{my_coin["category"]}}</td>
                     <td>{{my_coin["daytime"]}}</td>
+                    <td><button class="btn btn-primary" id = "{{my_coin["daytime"]}}" name = "{{my_coin["daytime"]}}" type="submit">Submit</button></td>
                 </tr>
             {% endfor %}
     </form>
