@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Wallet
+{% endblock %}
+
+{% block main %}
+    <form action="/wallet" method="get">
+        <h2>Your wallet is empty</h2>
+        <h3>Please add <a href="http://127.0.0.1:5000/cashflow">Cashflow</a> to fill your wallet.
+        </h3>
+    </form>
+{% endblock %}

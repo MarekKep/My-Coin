@@ -1,12 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends "index.html" %}
+
+{% block title %}
+    Wallet
+{% endblock %}
+
+{% block main %}
+    <form action="/wallet" method="get">
+        <table id="tabula" class="table table-dark table-sm" >
+            <tr>
+                <td>Count</td>
+                <td>Currency</td>
+                <td>Category</td>
+                <td>Date</td>
+            </tr>
+            {% for my_coin in my_coin %}
+                <tr>
+                    <td>{{my_coin["count"]}}</td>
+                    <td>{{my_coin["currency"]}}</td>
+                    <td>{{my_coin["category"]}}</td>
+                    <td>{{my_coin["daytime"]}}</td>
+                </tr>
+            {% endfor %}
+    </form>
+{% endblock %}
