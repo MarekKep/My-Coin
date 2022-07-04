@@ -76,14 +76,21 @@ def after_request(response):
 #     except TypeError:
 #         return redirect("/")
 
-@app.route("/wallet")
+@app.route("/wallet", methods=["GET", "POST"])
 @login_required
 def wallet():
-    my_coin = db.execute("SELECT * FROM cashflow WHERE cashflow_id = ?", session["user_id"])
-    try:
-        return render_template("wallet.html", my_coin = my_coin)
-    except TypeError:
-        render_template("emptywallet.html")
+    if request.method == "POST":
+        name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        db.execute("DELETE FROM cashflow WHERE daytime = ? and cashflow_id = ?", request.form.get("my_coin['daytime']"),session["user_id"])
+        my_coin = db.execute("SELECT * FROM cashflow WHERE cashflow_id = ?", session["user_id"])
+        return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"])
+    else:
+        my_coin = db.execute("SELECT * FROM cashflow WHERE cashflow_id = ?", session["user_id"])
+        name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        try:
+            return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"])
+        except TypeError:
+            render_template("emptywallet.html",name = name[0]["username"])
 
     # """Buy shares of stock"""
     # if request.method == "POST":
@@ -111,7 +118,8 @@ def wallet():
 @app.route("/statistics")
 @login_required
 def statistics():
-    return render_template("statistics.html")
+    name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+    return render_template("statistics.html",name = name[0]["username"])
     # """Show history of transactions"""
     # buy = db.execute("SELECT * FROM buy WHERE buy_id = ? ORDER BY daytime DESC", session["user_id"])
     # sell = db.execute("SELECT * FROM sell WHERE sell_id = ? ORDER BY daytime DESC", session["user_id"])
@@ -153,7 +161,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/home")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -172,10 +180,11 @@ def logout():
     return redirect("/")
 
 
-@app.route("/")
+@app.route("/home")
 @login_required
 def home():
-    return render_template("home.html")
+    name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+    return render_template("home.html",name = name[0]["username"])
     # """Get stock quote."""
     # if request.method == "POST":
     #     stock = lookup(request.form.get("symbol"))
@@ -186,6 +195,13 @@ def home():
     #     return render_template("quote.html")
 
 
+@app.route("/")
+def index():
+    try:
+        name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        return render_template("index.html",name = name[0]["username"])
+    except KeyError:
+        return render_template("index.html")
 name = 0
 
 
@@ -243,7 +259,8 @@ def cashflow():
                 db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'expense',?,?,?)", session["user_id"], request.form.get("expense_count"), request.form.get("expense_currency"), request.form.get("expense_category"))
         return redirect("/wallet")
     else:
-        return render_template("cashflow.html")
+        name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        return render_template("cashflow.html",name = name[0]["username"])
     # """Sell shares of stock"""
     # if request.method == "POST":
     #     symbol = request.form.get("symbol")
@@ -349,7 +366,8 @@ def settings():
                 db.execute("UPDATE users SET hash = ? WHERE id = ?",generate_password_hash(request.form.get("newpassword"), method='pbkdf2:sha256', salt_length=8), session["user_id"])
         return redirect("/login")
     else:
-        return render_template("settings.html")
+        name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        return render_template("settings.html",name = name[0]["username"])
 
 
 if __name__ == '__main__':
