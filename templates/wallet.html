@@ -20,7 +20,7 @@
                     <td>{{my_coin["currency"]}}</td>
                     <td>{{my_coin["category"]}}</td>
                     <td>{{my_coin["daytime"]}}</td>
-                    <td><button class="btn btn-primary" id = "{{my_coin["daytime"]}}" name = "{{my_coin["daytime"]}}" type="submit">Submit</button></td>
+                    <td><a href="{{ url_for('delete', deleted_id = my_coin["id"]) }}" class="btn btn-outline-danger btn-sm">Delete</a></td>
                 </tr>
             {% endfor %}
     </form>

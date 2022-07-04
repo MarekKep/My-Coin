@@ -75,22 +75,29 @@ def after_request(response):
 #         return render_template("index.html", sumpurchases=sumpurchases, cash=cash, TOTAL=Total)
 #     except TypeError:
 #         return redirect("/")
-
 @app.route("/wallet", methods=["GET", "POST"])
 @login_required
 def wallet():
+    butt = list()
     if request.method == "POST":
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-        db.execute("DELETE FROM cashflow WHERE daytime = ? and cashflow_id = ?", request.form.get("my_coin['daytime']"),session["user_id"])
+        db.execute("DELETE FROM cashflow WHERE time = ? and cashflow_id = ?", request.form.get("clicked_btn"),session["user_id"])
         my_coin = db.execute("SELECT * FROM cashflow WHERE cashflow_id = ?", session["user_id"])
-        return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"])
+        butt.append(request.form.get("clicked_btn"))
+        return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"], butt = butt)
     else:
         my_coin = db.execute("SELECT * FROM cashflow WHERE cashflow_id = ?", session["user_id"])
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
         try:
-            return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"])
+            return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"], butt = butt)
         except TypeError:
             render_template("emptywallet.html",name = name[0]["username"])
+
+
+@app.route('/delete-post/<int:deleted_id>')
+def delete(deleted_id):
+    db.execute("DELETE FROM cashflow WHERE id = ?", int(deleted_id))
+    return redirect("/wallet")
 
     # """Buy shares of stock"""
     # if request.method == "POST":
