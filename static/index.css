@@ -1,37 +1,125 @@
 @import url(wallet.css);
+@import url(cashflow.css);
+@import url('https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap');
 
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Anek Latin", sans-serif;
+}
 body {
-    height: 10px;
+    background-image: url("img/MyCoin-background.jpg");
+    background-size: cover;
+    max-width: 100%;
+    height: 100%;
+    background-attachment: fixed;
+    padding: 10px;
 }
-/* Size for brand */
-nav .navbar-brand
-{
-    font-size: xx-large;
+.hidden-main {
+    
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+}
+header .company-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+header .company-title img {
+    padding: 0 2px 0 2px;  
+}
+header li {
+    list-style: none;
+}
+header a {
+    text-decoration: none;
+    color: black;
+}
+header .navbar {
+    display: flex;
+    min-height: 70px;
+    justify-content: center;
+    align-items: center;  
+}
+header .user-icon {
+    padding-right: 15px;
+}
+header .nav-menu {
+   display: flex;
+   align-items: center;
+   gap: 60px;
+}
+header .hamburger {
+    display: none;
+    cursor: pointer;
+}
+header .hamburger .bar {
+    display: block;
+    width: 25px;
+    height: 2px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: black;
+}
+header .pray-for-ukraine, .social-media-icons {
+    display: none;
 }
 
-/* Colors for brand */
-nav .navbar-brand .blue
-{
-    color: #537fbe;
+@media (max-width: 768px) {
+    header .hamburger {
+        display: block;
+    }
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(1) {
+        top: 50%;
+        transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(3) {
+        top: 50%;
+        transform: translateY(-7px) rotate(-45deg);
+    }
+    header .nav-menu {
+        position: fixed;
+        left: -100%;
+        gap: 0;
+        font-size: 30px;
+        top: 70px;
+        height: 100%;
+        flex-direction: column;
+        background-color: #E2E2E2;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+    }
+    header .nav-item {
+        margin: 16px 0;
+    }
+    header .nav-menu.active {
+        left: 0;
+    }
+    header .user-nav {
+        display: flex;
+    }
+    header .pray-for-ukraine {
+        padding-top: 50px;
+        display: block;
+    }
+    header .social-media-icons {
+        display: flex;
+        padding-top: 50px;
+    }
+    header .social-media-icons a {
+        padding: 15px;
+    }
 }
-nav .navbar-brand .red
-{
-    color: #ea433b;
-}
-nav .navbar-brand .yellow
-{
-    color: #f5b82e;
-}
-nav .navbar-brand .green
-{
-    color: #2e944b;
-}
-table{
-    width: 100%;
-}
-.tabula{
-    width: auto;
-    margin-right: 0px;
-    margin-left: auto;
-}
-.field {clear:both; text-align:right;}
+

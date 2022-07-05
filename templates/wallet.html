@@ -5,22 +5,30 @@
 {% endblock %}
 
 {% block main %}
+    <div class="money-in-wallet">
+        <label class="in-your-wallet">In your wallet: <br></label>
+            <select name="currency" id="currency">
+            <option id="currency-value" value="UAH">UAH</option>
+            <option id="currency-value" value="USD">USD</option>
+            <option id="currency-value" value="EUR">EUR</option>
+            </select>
+    </div>
     <form class="wallet-page" action="/wallet" method="get">
         <table id="tabula" class="table table-dark table-sm" >
-            <tr>
-                <td>Count</td>
+            <tr class="wallet-history-title">
+                <td>Amount</td>
                 <td>Currency</td>
                 <td>Category</td>
                 <td>Date</td>
                 <td></td>
             </tr>
             {% for my_coin in my_coin %}
-                <tr>
-                    <td>{{my_coin["count"]}}</td>
-                    <td>{{my_coin["currency"]}}</td>
-                    <td>{{my_coin["category"]}}</td>
-                    <td>{{my_coin["daytime"]}}</td>
-                    <td><button class="btn delete-button" id = "{{my_coin["daytime"]}}" name = "{{my_coin["daytime"]}}" type="submit"><img class="trash-icon" src="../static/img/trash-icon.svg" alt="delete button">Delete</button></td>
+                <tr class="wallet-history-description">
+                    <td class="wallet-history">{{my_coin["count"]}}</td>
+                    <td class="wallet-history">{{my_coin["currency"]}}</td>
+                    <td class="wallet-history">{{my_coin["category"]}}</td>
+                    <td class="wallet-history">{{my_coin["daytime"]}}</td>
+                    <td class="wallet-history"><button class="btn delete-button" id = "{{my_coin["daytime"]}}" name = "{{my_coin["daytime"]}}" type="submit"><img class="trash-icon" src="../static/img/trash-icon.svg" alt="delete button"></button></td>
                 </tr>
                 
             {% endfor %}

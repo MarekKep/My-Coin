@@ -1,9 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap');
+.money-in-wallet {
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.in-your-wallet {
+    padding: 10px 0 10px 0;
+}
+#currency {
+    background: none;
+    border: none;
+    font-size: 30px;
+}
+#currency-value {
+    background: none;
+    border: none;
+}
+.wallet-page {
+    padding-top: 100px;
+}
 .delete-button {
-    color: white;
+    background: none;
+    border: none;
 }
-.delete-button:hover {
-    color: rgb(177, 18, 18);
+.wallet-history {
+    font-family: "Klee One";
 }
-.trash-icon {
-    padding-right: 10px;
+.wallet-history-title, .wallet-history-description {
+    text-align: center;
+}
+.wallet-history-title {
+    font-size: medium;
+    font-weight: bold;
+}
+td {
+    padding: 0 5px 0 5px;
 }
