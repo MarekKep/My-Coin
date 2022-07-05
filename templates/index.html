@@ -6,6 +6,12 @@
         <meta name="viewport" content="initial-scale=1, width=device-width">
         <link href="/static/index.css" rel="stylesheet">
         <link rel="shortcut icon" href="../static/img/title-icon.svg">
+        <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
         <title>{% block title %}{% endblock %}</title>
     </head>
 
@@ -49,6 +55,20 @@
                     </div>
             </div>
         </header>          
+        </nav>
+        <main class="container-fluid py-5 text-center">
+            <div class="col-md-10"></div>
+                {% with messages = get_flashed_messages(with_categories = True) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            {% block main %}{% endblock %}
+        </main>
 
             <main class="hidden-main">
                 {% block main %}{% endblock %}
