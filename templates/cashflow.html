@@ -10,39 +10,48 @@
             <h2>Income</h2>
             <div class="income-cashflow">
             <div class="mb-3">
-                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="income-amount" name="income_count" placeholder="Amount" type="number" min = 1>
+                <h3>Amount</h3>
+                <input autocomplete="off" autofocus class="amount-cashflow" id="income-amount" name="income_count" placeholder="number" type="number" min = 1>
             </div>
             <div class="mb-3">
-                <select name="currency" id="currency">
+                <h3>Currency</h3>
+                <select name="currency" id="currency-income">
                     <option id="currency-value" value="uah">UAH</option>
                     <option id="currency-value" value="usd">USD</option>
                     <option id="currency-value" value="eur">EUR</option>
                 </select>
             </div>
             <div class="mb-3">
+                <h3>Category</h3>
                 <select name="category" id="category">
                     <option id="category-value" value="salary">Salary</option>
                     <option id="category-value" value="other">Other</option>
                 </select>
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="submit-button">
+        <button type="submit">Add income</button>
+    </div>
         </label>
         <hr>
         <label class="form-check-label" for="flexCheckDefault">
             <h2>Expense</h2>
+            <div class="expense-cashflow">
             <div class="mb-3">
-                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="expense_count" name="expense_count" placeholder="Amount" type="number" min = 1>
+                <h3>Amount</h3>
+                <input autocomplete="off" autofocus class="amount-cashflow" id="expense_count" name="expense_count" placeholder="number" type="number" min = 1>
             </div>
             <div class="mb-3">
-                    <select name="currency" id="currency">
+                <h3>Currency</h3>
+                    <select name="currency" id="currency-expense">
                         <option id="currency-value" value="uah">UAH</option>
                         <option id="currency-value" value="usd">USD</option>
                         <option id="currency-value" value="eur">EUR</option>
                     </select>
             </div>
             <div class="mb-3">
-                    <select name="category" id="category">
+                <h3>Category</h3>
+                    <select name="category" id="category-expense">
                         <option id="category-value" value="entertainment">Entertainment</option>
                         <option id="category-value" value="grocery">Grocery</option>
                         <option id="category-value" value="health">Health</option>
@@ -52,7 +61,10 @@
                         <option id="category-value" value="other">Other</option>
                     </select>
             </div>
-            <button class="btn btn-primary" type="submit">Submit</button>
-            </label>
+        </div>
+        <div class="submit-button">
+            <button type="submit">Add expense</button>
+        </div>
+        </label>
     </form>
 {% endblock %}

@@ -1,8 +1,67 @@
-.income-cashflow {
+.income-cashflow, .expense-cashflow {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
-#category {
+#currency-expense, #currency-income, #category {
 background: none;
 border: none;
-font-size: 30px;
+font-size: 19px;
+text-align: center;
+}
+.form-check-label h2 {
+    text-align: center;
+    padding: 30px 0 25px 0;
+    font-size: 40px;
+}
+.form-check-label h3 {
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+.mb-3 {
+    padding: 0 5px 0 5px;
+}
+.mb-3 input {
+    margin-top: 8px;
+    align-items: center;
+}
+.submit-button {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0 40px 0;
+}
+.submit-button button {
+    background-color: #474747;
+    color: white;
+    padding: 15px 40px;
+    font-size: 20px;
+}
+.amount-cashflow {
+    width: 80px;
+    background: none;
+    border-right: black;
+    border-left: black;
+    border-top: black;
+    text-align: center;
+}
+.mb-3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.income-cashflow .mb-3 {
+    padding: 0 15px 0 15px;
+}
+.expense-cashflow .mb-3 {
+    padding: 0 15px 0 15px;
+}
+#category-expense {
+    background: none;
+    border: none;
+    font-size: 15px;
+    text-align: center;
+    width: 85px;
 }

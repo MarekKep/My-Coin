@@ -23,7 +23,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: auto;
+    height: 50px;
 }
 header .company-title {
     display: flex;
@@ -97,6 +97,7 @@ header .pray-for-ukraine, .social-media-icons {
         height: 100%;
         flex-direction: column;
         background-color: #E2E2E2;
+        z-index: 50;
         width: 100%;
         text-align: center;
         transition: 0.3s;
