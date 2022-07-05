@@ -6,6 +6,8 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required
+import json
+import requests
 # Configure application
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
@@ -118,7 +120,16 @@ def delete(deleted_id):
 @login_required
 def statistics():
     name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-    return render_template("statistics.html",name = name[0]["username"])
+
+    income_1_category = db.execute("SELECT sum(count) FROM cashflow WHERE id = ?", session["user_id"])
+    expense = db.session.query("SELECT username FROM users WHERE id = ?", session["user_id"])
+    income = []
+    expense = []
+    for total_amount, _ in income:
+        income.append(total_amount)
+    for total_amount, _ in expense:
+        expense.append(total_amount)
+    return render_template("statistics.html",name = name[0]["username"],income_vs_expense=json.dumps(income_expense))
     # """Show history of transactions"""
     # buy = db.execute("SELECT * FROM buy WHERE buy_id = ? ORDER BY daytime DESC", session["user_id"])
     # sell = db.execute("SELECT * FROM sell WHERE sell_id = ? ORDER BY daytime DESC", session["user_id"])
@@ -247,15 +258,17 @@ def register():
 @login_required
 def cashflow():
     if request.method == "POST":
+        usd_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+
         if not request.form.get("income_count") or not request.form.get("income_currency") or not request.form.get("income_category"):
             if not request.form.get("expense_count") or not request.form.get("expense_currency") or not request.form.get("expense_category"):
                 return apology("please correctly enter the expence or income form",400)
             else:
-                db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'expense',?,?,?)", session["user_id"], request.form.get("expense_count"), request.form.get("expense_currency"), request.form.get("expense_category"))
+                db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'expense',?,?,?)", session["user_id"], int(request.form.get("expense_count")) * usd_to_uah, request.form.get("expense_currency"), request.form.get("expense_category"))
         else:
-            db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'income',?,?,?)", session["user_id"], request.form.get("income_count"), request.form.get("income_currency"), request.form.get("income_category"))
+            db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'income',?,?,?)", session["user_id"], int(request.form.get("income_count")) * usd_to_uah, request.form.get("income_currency"), request.form.get("income_category"))
             if request.form.get("expense_count") and request.form.get("expense_currency") and request.form.get("expense_category"):
-                db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'expense',?,?,?)", session["user_id"], request.form.get("expense_count"), request.form.get("expense_currency"), request.form.get("expense_category"))
+                db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'expense',?,?,?)", session["user_id"], int(request.form.get("expense_count")) * usd_to_uah, request.form.get("expense_currency"), request.form.get("expense_category"))
         return redirect("/wallet")
     else:
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
