@@ -33,11 +33,11 @@
                             <a href="#"><img src="../static/img/facebook-icon.svg" alt="facebook-icon"></a>
                             </li>
                         </ul>
-                        <!-- <ul class="nav-menu">
+                        <ul class="nav-menu">
                             <li class="nav-item"><a class="nav-link">{{name}}</a></li>
                             <li class="nav-item"><a class="nav-link" href="/settings">Settings</a></li>
                             <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
-                        </ul> -->
+                        </ul>
                     {% else %}
                         <ul class="nav-menu">
                             <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
@@ -69,10 +69,6 @@
                 {% endwith %}
             {% block main %}{% endblock %}
         </main>
-
-            <main class="hidden-main">
-                {% block main %}{% endblock %}
-            </main>
         
         <footer></footer>
         <script src="../static/js/burger-menu.js"></script>
