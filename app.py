@@ -5,7 +5,7 @@ from flask_session import Session
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import apology, login_required
+from helpers import apology, login_required, exchange_rate
 import json
 import requests
 # Configure application
@@ -77,20 +77,113 @@ def after_request(response):
 #         return render_template("index.html", sumpurchases=sumpurchases, cash=cash, TOTAL=Total)
 #     except TypeError:
 #         return redirect("/")
-@app.route("/wallet")
+@app.route("/wallet", methods=["GET", "POST"])
 @login_required
 def wallet():
-    my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
-    name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-    try:
-        return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"])
-    except TypeError:
-        render_template("emptywallet.html",name = name[0]["username"])
+    if request.method == "POST":
+    # usd_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+    # usd_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+    # uah_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+    # uah_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+    # eur_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+    # eur_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+        uah_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'uah'", session["user_id"])[0]["sum(count)"]
+        usd_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'usd'", session["user_id"])[0]["sum(count)"]
+        eur_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'eur'", session["user_id"])[0]["sum(count)"]
+        uah_expence = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'expense' and cashflow_id = ? and currency = 'uah'", session["user_id"])[0]["sum(count)"]
+        usd_expence = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'expense' and cashflow_id = ? and currency = 'usd'", session["user_id"])[0]["sum(count)"]
+        eur_expence = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'expense' and cashflow_id = ? and currency = 'eur'", session["user_id"])[0]["sum(count)"]
+        if uah_income is None:
+            uah_income = 0
+        if usd_income is None:
+            usd_income = 0
+        if eur_income is None:
+            eur_income = 0
+        if uah_expence is None:
+            uah_expence = 0
+        if usd_expence is None:
+            usd_expence = 0
+        if eur_expence is None:
+            eur_expence = 0
+        cash_uah = uah_income - uah_expence
+        cash_usd = usd_income - usd_expence
+        cash_eur = eur_income - eur_expence
+        currency = request.form.get("currency")
+        if currency == "UAH":
+            usd_to_uah = exchange_rate["usd_to_uah"]
+            eur_to_uah = exchange_rate["eur_to_uah"]
+            cash_usd_in_uah = int(cash_usd) * usd_to_uah
+            cash_usd_in_uah = float(round(cash_usd_in_uah, 2))
+            cash_eur_in_uah = int(cash_eur) * eur_to_uah
+            cash_eur_in_uah = float(round(cash_eur_in_uah, 2))
+            cash_uah = float(round(cash_uah, 2))
+            money = cash_usd_in_uah + cash_eur_in_uah + float(cash_uah)
+        elif currency == "USD":
+            uah_to_usd = exchange_rate["uah_to_usd"]
+            eur_to_usd = exchange_rate["eur_to_usd"]
+            cash_uah_in_usd = int(cash_uah) * uah_to_usd
+            cash_uah_in_usd = float(round(cash_uah_in_usd, 2))
+            cash_eur_in_usd = int(cash_eur) * eur_to_usd
+            cash_eur_in_usd = float(round(cash_eur_in_usd, 2))
+            cash_usd = str(round(cash_usd, 2))
+            money = cash_uah_in_usd + cash_eur_in_usd + float(cash_usd)
+        else:
+            usd_to_eur = exchange_rate["usd_to_eur"]
+            uah_to_eur = exchange_rate["uah_to_eur"]
+            cash_usd_in_eur = int(cash_usd) * usd_to_eur
+            cash_usd_in_eur = float(round(cash_usd_in_eur, 2))
+            cash_uah_in_eur = int(cash_uah) * uah_to_eur
+            cash_uah_in_eur = float(round(cash_uah_in_eur, 2))
+            cash_eur = float(round(cash_eur, 2))
+            money = cash_usd_in_eur + cash_uah_in_eur + float(cash_eur)
+        my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
+        name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        try:
+            return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money,cash_uah = cash_uah,cash_usd = cash_usd,cash_eur =cash_eur,uah_income = uah_income,usd_income = usd_income,eur_income= eur_income,uah_expence =uah_expence,usd_expence = usd_expence, eur_expence = eur_expence)
+        except TypeError:
+            render_template("emptywallet.html",name = name[0]["username"])
+    else:
+        uah_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'uah'", session["user_id"])[0]["sum(count)"]
+        usd_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'usd'", session["user_id"])[0]["sum(count)"]
+        eur_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'eur'", session["user_id"])[0]["sum(count)"]
+        uah_expence = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'expense' and cashflow_id = ? and currency = 'uah'", session["user_id"])[0]["sum(count)"]
+        usd_expence = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'expense' and cashflow_id = ? and currency = 'usd'", session["user_id"])[0]["sum(count)"]
+        eur_expence = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'expense' and cashflow_id = ? and currency = 'eur'", session["user_id"])[0]["sum(count)"]
+        if uah_income is None:
+            uah_income = 0
+        if usd_income is None:
+            usd_income = 0
+        if eur_income is None:
+            eur_income = 0
+        if uah_expence is None:
+            uah_expence = 0
+        if usd_expence is None:
+            usd_expence = 0
+        if eur_expence is None:
+            eur_expence = 0
+        cash_uah = uah_income - uah_expence
+        cash_usd = usd_income - usd_expence
+        cash_eur = eur_income - eur_expence
+        usd_to_uah = exchange_rate["usd_to_uah"]
+        eur_to_uah = exchange_rate["eur_to_uah"]
+        cash_usd_in_uah = int(cash_usd) * usd_to_uah
+        cash_usd_in_uah = float(round(cash_usd_in_uah, 2))
+        cash_eur_in_uah = int(cash_eur) * eur_to_uah
+        cash_eur_in_uah = float(round(cash_eur_in_uah, 2))
+        cash_uah = float(round(cash_uah, 2))
+        money = cash_usd_in_uah + cash_eur_in_uah + float(cash_uah)
+        my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
+        name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        try:
+            return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money)
+        except TypeError:
+            render_template("emptywallet.html",name = name[0]["username"])
 
 
 @app.route('/delete-post/<int:deleted_id>')
 def delete(deleted_id):
     db.execute("DELETE FROM cashflow WHERE id = ?", int(deleted_id))
+    db.execute("DELETE FROM count_cashflow WHERE id = ?", int(deleted_id))
     return redirect("/wallet")
 
     # """Buy shares of stock"""
@@ -258,12 +351,12 @@ def register():
 @login_required
 def cashflow():
     if request.method == "POST":
-        usd_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        usd_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        uah_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        uah_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        eur_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        eur_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+        # usd_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+        # usd_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+        # uah_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+        # uah_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+        # eur_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
+        # eur_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
 
         if not request.form.get("income_count") or not request.form.get("currency_income") or not request.form.get("category_income"):
             if not request.form.get("expense_count") or not request.form.get("currency_expense") or not request.form.get("category_expense"):
@@ -271,9 +364,43 @@ def cashflow():
             else:
                 db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'expense',?,?,?)", session["user_id"], int(request.form.get("expense_count")), request.form.get("currency_expense"), request.form.get("category_expense"))
                 if request.form.get("currency_expense") == 'uah':
-                    pass
+                    uah_to_usd = exchange_rate["uah_to_usd"]
+                    count_uah_to_usd = int(request.form.get("expense_count")) * uah_to_usd
+                    count_uah_to_usd = str(round(count_uah_to_usd, 2))
+                    if request.form.get("category_expense") == 'entertainment':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id,category_cashflow, count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0',?,'0','0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'grocery':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0',?,'0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'health':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0',?,'0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'transport':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0',?,'0','0','0')", session["user_id"],request.form.get("category_expense"), count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'cafe':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0',?,'0','0')", session["user_id"],request.form.get("category_expense"), count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'householding':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0',?,'0')", session["user_id"], request.form.get("category_expense"),count_uah_to_usd)
+                    else:
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0','0',?)", session["user_id"],request.form.get("category_expense"), count_uah_to_usd)
+       
                 elif request.form.get("currency_expense") == 'eur':
-                    pass
+                    eur_to_usd = exchange_rate["eur_to_usd"]
+                    count_eur_to_usd = int(request.form.get("expense_count")) * eur_to_usd
+                    count_eur_to_usd = str(round(count_eur_to_usd, 2))
+                    if request.form.get("category_expense") == 'entertainment':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id,category_cashflow, count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0',?,'0','0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'grocery':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0',?,'0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'health':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0',?,'0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'transport':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0',?,'0','0','0')", session["user_id"],request.form.get("category_expense"), count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'cafe':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0',?,'0','0')", session["user_id"],request.form.get("category_expense"), count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'householding':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0',?,'0')", session["user_id"], request.form.get("category_expense"),count_eur_to_usd)
+                    else:
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0','0',?)", session["user_id"],request.form.get("category_expense"), count_eur_to_usd)
+       
                 else:
                     if request.form.get("category_expense") == 'entertainment':
                         db.execute("INSERT INTO count_cashflow(count_cashflow_id,category_cashflow, count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0',?,'0','0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),int(request.form.get("expense_count")))
@@ -291,8 +418,85 @@ def cashflow():
                         db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0','0',?)", session["user_id"],request.form.get("category_expense"), int(request.form.get("expense_count")))
         else:   
             db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'income',?,?,?)", session["user_id"], int(request.form.get("income_count")), request.form.get("currency_income"), request.form.get("category_income"))
+            if request.form.get("currency_income") == 'uah':
+                uah_to_usd = exchange_rate["uah_to_usd"]
+                count_uah_to_usd = int(request.form.get("income_count")) * uah_to_usd
+                count_uah_to_usd = str(round(count_uah_to_usd, 2))
+                if request.form.get("category_income") == 'salary':
+                    db.execute("INSERT INTO count_cashflow(count_cashflow_id,category_cashflow, count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,'salary',?,'0','0','0','0','0','0','0','0')", session["user_id"],count_uah_to_usd)
+                else:
+                    db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,'other','0',?,'0','0','0','0','0','0','0')", session["user_id"],count_uah_to_usd)
+               
+            elif request.form.get("currency_income") == 'eur':
+                eur_to_usd = exchange_rate["eur_to_usd"]
+                count_eur_to_usd = int(request.form.get("income_count")) * eur_to_usd
+                count_eur_to_usd = str(round(count_eur_to_usd, 2))
+                if request.form.get("category_income") == 'salary':
+                    db.execute("INSERT INTO count_cashflow(count_cashflow_id,category_cashflow, count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,'salary',?,'0','0','0','0','0','0','0','0')", session["user_id"],count_eur_to_usd)
+                else:
+                    db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,'other','0',?,'0','0','0','0','0','0','0')", session["user_id"],count_eur_to_usd)
+               
+            else:
+                if request.form.get("category_income") == 'salary':
+                    db.execute("INSERT INTO count_cashflow(count_cashflow_id,category_cashflow, count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,'salary',?,'0','0','0','0','0','0','0','0')", session["user_id"], int(request.form.get("income_count")))
+                else:
+                    db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,'other','0',?,'0','0','0','0','0','0','0')", session["user_id"], int(request.form.get("income_count")))
+                    
             if request.form.get("expense_count") and request.form.get("currency_expense") and request.form.get("category_expense"):
                 db.execute("INSERT INTO cashflow(cashflow_id,type,count,currency,category)VALUES(?,'expense',?,?,?)", session["user_id"], int(request.form.get("expense_count")), request.form.get("currency_expense"), request.form.get("category_expense"))
+                if request.form.get("currency_expense") == 'uah':
+                    uah_to_usd = exchange_rate["uah_to_usd"]
+                    count_uah_to_usd = int(request.form.get("expense_count")) * uah_to_usd
+                    count_uah_to_usd = str(round(count_uah_to_usd, 2))
+                    if request.form.get("category_expense") == 'entertainment':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id,category_cashflow, count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0',?,'0','0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'grocery':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0',?,'0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'health':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0',?,'0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'transport':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0',?,'0','0','0')", session["user_id"],request.form.get("category_expense"), count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'cafe':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0',?,'0','0')", session["user_id"],request.form.get("category_expense"), count_uah_to_usd)
+                    elif request.form.get("category_expense") == 'householding':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0',?,'0')", session["user_id"], request.form.get("category_expense"),count_uah_to_usd)
+                    else:
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0','0',?)", session["user_id"],request.form.get("category_expense"), count_uah_to_usd)
+       
+                elif request.form.get("currency_expense") == 'eur':
+                    eur_to_usd = exchange_rate["eur_to_usd"]
+                    count_eur_to_usd = int(request.form.get("expense_count")) * eur_to_usd
+                    count_eur_to_usd = str(round(count_eur_to_usd, 2))
+                    if request.form.get("category_expense") == 'entertainment':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id,category_cashflow, count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0',?,'0','0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'grocery':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0',?,'0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'health':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0',?,'0','0','0','0')", session["user_id"], request.form.get("category_expense"),count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'transport':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0',?,'0','0','0')", session["user_id"],request.form.get("category_expense"), count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'cafe':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0',?,'0','0')", session["user_id"],request.form.get("category_expense"), count_eur_to_usd)
+                    elif request.form.get("category_expense") == 'householding':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0',?,'0')", session["user_id"], request.form.get("category_expense"),count_eur_to_usd)
+                    else:
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0','0',?)", session["user_id"],request.form.get("category_expense"), count_eur_to_usd)
+       
+                else:
+                    if request.form.get("category_expense") == 'entertainment':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id,category_cashflow, count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0',?,'0','0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),int(request.form.get("expense_count")))
+                    elif request.form.get("category_expense") == 'grocery':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0',?,'0','0','0','0','0')", session["user_id"], request.form.get("category_expense"),int(request.form.get("expense_count")))
+                    elif request.form.get("category_expense") == 'health':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0',?,'0','0','0','0')", session["user_id"], request.form.get("category_expense"),int(request.form.get("expense_count")))
+                    elif request.form.get("category_expense") == 'transport':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0',?,'0','0','0')", session["user_id"],request.form.get("category_expense"), int(request.form.get("expense_count")))
+                    elif request.form.get("category_expense") == 'cafe':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0',?,'0','0')", session["user_id"],request.form.get("category_expense"), int(request.form.get("expense_count")))
+                    elif request.form.get("category_expense") == 'householding':
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0',?,'0')", session["user_id"], request.form.get("category_expense"),int(request.form.get("expense_count")))
+                    else:
+                        db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0','0',?)", session["user_id"],request.form.get("category_expense"), int(request.form.get("expense_count")))
         return redirect("/wallet")
     else:
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
