@@ -7,22 +7,34 @@
 {% block main %}
     <form class="wallet-page" action="/wallet" method="post">
         <div class="money-in-wallet">
-            <label class="in-your-wallet">In your wallet:{{money}}<br></label>
-                <h4>Your cash_eur:{{cash_eur}}</h4>
-                <h4>Your cash_usd:{{cash_usd}}</h4>
-                <h4>Your cash_uah:{{cash_uah}}</h4>
-                <h4>Your uah_income:{{uah_income}}</h4>
-                <h4>Your usd_income:{{usd_income}}</h4>
-                <h4>Your eur_income:{{eur_income}}</h4>
-                <h4>Your uah_expence:{{uah_expence}}</h4>
-                <h4>Your usd_expence:{{usd_expence}}</h4>
-                <h4>Your eur_expence:{{eur_expence}}</h4>
+            <label class="in-your-wallet"><span class="in-your-wallet-title">In your wallet:</span><br>{{money}}
                 <select name="currency" id="currency">
-                <option id="currency-value" value="UAH">UAH</option>
-                <option id="currency-value" value="USD">USD</option>
-                <option id="currency-value" value="EUR">EUR</option>
-                </select>
-                <button type="submit">Enter</button>
+                    <option id="currency-value" value="UAH">UAH</option>
+                    <option id="currency-value" value="USD">USD</option>
+                    <option id="currency-value" value="EUR">EUR</option>
+                    </select>
+            </label>
+            <div class="wallet-description">
+                    <details>
+                        <summary class="wallet-details-title">Details</summary>
+                        <div>
+                            <h6 class="details-currency">in EUR: {{cash_eur}}</h6>
+                            <h6 class="details-currency">in USD: {{cash_usd}}</h6>
+                            <h6 class="details-currency">in UAH: {{cash_uah}}</h6>
+                        </div>
+                        <div>
+                            <h6 class="details-currency">UAH income: {{uah_income}}</h6>
+                            <h6 class="details-currency">USD income: {{usd_income}}</h6>
+                            <h6 class="details-currency">EUR income: {{eur_income}}</h6>
+                        </div>
+                        <div>
+                            <h6 class="details-currency">UAH expense: {{uah_expence}}</h6>
+                            <h6 class="details-currency">USD expense: {{usd_expence}}</h6>
+                            <h6 class="details-currency">EUR expense: {{eur_expence}}</h6>
+                        </div>
+                    </details>            
+            </div>
+                <button class="wallet-convert-button" type="submit">Convert</button>
         </div>
     </form> 
     <form class="wallet-page" action="/wallet" method="get">
@@ -36,6 +48,7 @@
                 <td></td>
             </tr>
             {% for coin in my_coin %}
+                {% if coin["type"] == 'expense' %}
                 <tr class="wallet-history-description">
                     <td class="wallet-history">{{coin["count"]}}</td>
                     <td class="wallet-history">{{coin["currency"]}}</td>
@@ -43,7 +56,16 @@
                     <td class="wallet-history">{{coin["strftime('%d.%m.%Y',daytime)"]}}</td>
                     <td class="wallet-history"><a href="{{ url_for('delete', deleted_id = coin["id"]) }}"</a><img class="trash-icon" src="../static/img/trash-icon.svg" alt="delete button"></button></td>
                 </tr>
-                
+                {% else %}
+                <tr class="wallet-history-description">
+                    <td class="wallet-history">{{coin["count"]}}</td>
+                    <td class="wallet-history">{{coin["currency"]}}</td>
+                    <td class="wallet-history">{{coin["category"]}}</td>
+                    <td class="wallet-history">{{coin["strftime('%d.%m.%Y',daytime)"]}}</td>
+                    <td class="wallet-history"><a href="{{ url_for('delete', deleted_id = coin["id"]) }}"</a><img class="trash-icon" src="../static/img/trash-icon.svg" alt="delete button"></button></td>
+                </tr>
+                {% endif %}
+
             {% endfor %}
             
     </form>

@@ -1,3 +1,5 @@
+// Burger menu
+
 const hamburger = document.querySelector(".hamburger");
 const navMenu = document.querySelector(".nav-menu");
 
@@ -11,3 +13,7 @@ document.querySelector(".nav-link").forEach(n => n.addEventListener("click", () 
     navMenu.classList.remove("active");
 }));
 
+// Details menu
+
+// document.getElementById('currency').value = "<?php echo $_POST['minSize'];?>";
+// document.getElementById('currency').value = "<?php echo $_POST['maxSize'];?>";
