@@ -47,7 +47,15 @@
                     
             </nav>
             <div class="user-nav">
-            <img class="user-icon" src="../static/img/user-icon.svg" alt="user icon">
+                <div class="user-dropdown">
+                        <img class="user-icon" src="../static/img/user-icon.svg" alt="user icon">
+                    <div class="user-dropdown-menu hide">
+                        <a class="nav-link">{{name}}</a>
+                        <hr class="user-dropdown-line">
+                        <a class="nav-link" href="/settings">Settings</a>
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </div>
+                 </div>
                     <div class="hamburger">
                         <span class="bar"></span>
                         <span class="bar"></span>
@@ -72,6 +80,7 @@
         
         <footer></footer>
         <script src="../static/js/burger-menu.js"></script>
+        <script src="../static/js/user-dropdown-menu.js"></script>
     </body>
 
 </html>

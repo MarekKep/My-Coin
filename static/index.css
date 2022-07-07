@@ -72,6 +72,31 @@ header .hamburger .bar {
 header .pray-for-ukraine, .social-media-icons {
     display: none;
 }
+header .user-dropdown-menu a {
+    display: block;
+    padding: 10px 0 10px 0;
+}
+header .user-dropdown-line {
+    border: 1px solid black;
+}
+header .user-dropdown-menu {
+    border: 1px solid black;
+    width: 185px;
+    position: absolute;
+    right: 50px;
+    
+    text-align: center;
+    background-color: #B9C1C7;
+}
+header .user-dropdown {
+    z-index: 51;
+}
+header .user-dropdown .user-icon {
+    cursor: pointer;
+}
+header .hide {
+    display: none;
+}
 
 @media (max-width: 768px) {
     header .hamburger {

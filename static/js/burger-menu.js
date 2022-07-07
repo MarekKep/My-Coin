@@ -12,8 +12,3 @@ document.querySelector(".nav-link").forEach(n => n.addEventListener("click", () 
     hamburger.classList.remove("active");
     navMenu.classList.remove("active");
 }));
-
-// Details menu
-
-// document.getElementById('currency').value = "<?php echo $_POST['minSize'];?>";
-// document.getElementById('currency').value = "<?php echo $_POST['maxSize'];?>";

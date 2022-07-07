@@ -21,6 +21,7 @@
     background: none;
     border: none;
     font-size: 30px;
+    cursor: pointer;
 }
 #currency-value {
     background: none;
@@ -62,6 +63,7 @@ td {
     padding: 5px 30px;
     font-size: 20px;
     margin-top: 10px;
+    cursor: pointer;
 }
 .wallet-description div {
     padding: 10px 0 10px 0;
