@@ -418,7 +418,8 @@ def cashflow():
                         db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0',?,'0')", session["user_id"], request.form.get("category_expense"),int(request.form.get("expense_count")))
                     else:
                         db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0','0',?)", session["user_id"],request.form.get("category_expense"), int(request.form.get("expense_count")))
-        return redirect("/wallet")
+        name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        return render_template("cashflow.html",name = name[0]["username"])
     else:
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
         return render_template("cashflow.html",name = name[0]["username"])
