@@ -49,7 +49,7 @@ header .navbar {
     align-items: center;  
 }
 header .user-icon {
-    padding-right: 15px;
+    margin-right: 15px;
 }
 header .nav-menu {
    display: flex;
@@ -146,6 +146,25 @@ header .hide {
     }
     header .social-media-icons a {
         padding: 15px;
+    }
+    header .new-user-nav-menu {
+        display: flex;
+    }
+    header .new-user-nav-menu li {
+        margin: 0 5px 0 10px;
+    }
+    header .new-user-nav-menu .nav-link {
+        background-color: #B9C1C7;
+        padding: 8px 20px;
+    }
+    .home-page-nav {
+        position: absolute;
+    }
+    .home-page {
+       height: 300px;
+       width: 300px;
+       border: 1px solid black;
+       top: -50px;
     }
 }
 

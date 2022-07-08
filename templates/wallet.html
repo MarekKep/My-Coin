@@ -37,16 +37,18 @@
                 <button class="wallet-convert-button" type="submit">Convert</button>
         </div>
     </form> 
-    <form class="wallet-page" action="/wallet" method="get">
-        <hr class="wallet-upper-line">
+    <hr class="wallet-upper-line">
+    <div class="wallet-history-title">
+        <h3>Amount</h3>
+        <h3 class="wallet-currency">Curr.</h3>
+        <h3 class="wallet-category">Category</h3>
+        <h3>Date</h3>
+        <h3></h3>
+    </div>
+    <form class="wallet-page-history" action="/wallet" method="get">
+        
         <table id="tabula" class="table table-dark table-sm" >
-            <tr class="wallet-history-title">
-                <td>Amount</td>
-                <td>Currency</td>
-                <td>Category</td>
-                <td>Date</td>
-                <td></td>
-            </tr>
+            
             {% for coin in my_coin %}
                 {% if coin["type"] == 'expense' %}
                 <tr class="wallet-history-description">

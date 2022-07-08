@@ -28,7 +28,7 @@
     border: none;
 }
 .wallet-page {
-    padding-top: 60px;
+    margin-top: 20px;
 }
 .delete-button {
     background: none;
@@ -43,12 +43,26 @@
 .wallet-history-title {
     font-size: medium;
     font-weight: bold;
+    display: flex;
+    justify-content: flex-start;
+}
+.wallet-history-title h3 {
+    font-size: 15px;
+}
+.wallet-history-title .wallet-category {
+    margin-right: 65px;
+    margin-left: 38px;
+}
+.wallet-history-title .wallet-currency {
+    margin-left: 12px;
 }
 td {
-    padding: 7px 4px 7px 4px;
+    padding: 7px 12px 7px 6px;
+    font-size: 15px;
 }
 .wallet-upper-line {
-    margin-bottom: 35px;
+    margin-bottom: 15px;
+    margin-top: 30px;
     width: 100%;
     height: 1.5px;
     display: flex;
@@ -86,4 +100,12 @@ td {
 }
 .wallet-page select {
     position: relative;
+}
+.wallet-page-history {
+  margin-top: 10px;
+  overflow-y: auto;
+  height: 330px;
+}
+.wallet-history-expense {
+    color: red;
 }
