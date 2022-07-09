@@ -1,5 +1,6 @@
 @import url(wallet.css);
 @import url(cashflow.css);
+@import url(home.css);
 @import url('https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap');
 
 * {
@@ -157,14 +158,31 @@ header .hide {
         background-color: #B9C1C7;
         padding: 8px 20px;
     }
-    .home-page-nav {
-        position: absolute;
+    .new-user-home-page {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 70px;
     }
-    .home-page {
-       height: 300px;
+    .new-user-home-page img {
+        width: 80px;
+        height: 80px;
+    }
+    .new-user-home-page h2 {
        width: 300px;
-       border: 1px solid black;
-       top: -50px;
+       margin-bottom: 40px;
+       font-size: 28px;
+    }
+    .new-user-home-page p {
+        font-family: "Klee One", sans-serif;
+        margin-bottom: 60px;
+        width: 300px;
+        font-size: 20px;
+    }
+    .new-user-home-page .categories-icons {
+        margin-bottom: 80px;
     }
 }
 

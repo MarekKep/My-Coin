@@ -302,9 +302,9 @@ def home():
 def index():
     try:
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-        return render_template("index.html",name = name[0]["username"])
+        return render_template("new-user.html",name = name[0]["username"])
     except KeyError:
-        return render_template("index.html")
+        return render_template("new-user.html")
 name = 0
 
 

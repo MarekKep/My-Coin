@@ -16,11 +16,10 @@
     </head>
 
     <body>
-        
-        <header>
-            <a class="company-title" href="/home">My<img class="company-logo" src="../static/img/title-icon.svg" alt="coin">Coin</a>
-            <nav class="navbar">
                     {% if session["user_id"] %}
+                    <header>
+                        <a class="company-title" href="/home">My<img class="company-logo" src="../static/img/title-icon.svg" alt="coin">Coin</a>
+                        <nav class="navbar">
                         <ul class="nav-menu">
                             <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="/wallet">Wallet</a></li>
@@ -33,11 +32,11 @@
                             <a href="#"><img src="../static/img/facebook-icon.svg" alt="facebook-icon"></a>
                             </li>
                         </ul>
-                        <ul class="nav-menu">
+                        <!-- <ul class="nav-menu">
                             <li class="nav-item"><a class="nav-link">{{name}}</a></li>
                             <li class="nav-item"><a class="nav-link" href="/settings">Settings</a></li>
                             <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
-                        </ul>
+                        </ul> -->
                         <div class="user-nav">
                             <div class="user-dropdown">
                                     <img class="user-icon" src="../static/img/user-icon.svg" alt="user icon">
@@ -57,30 +56,21 @@
                     </nav>
                 </header> 
                     {% else %}
-                    <div>
+                    <header class="new-user-header">
+                    
+                        <a class="company-title" href="/home">My<img class="company-logo" src="../static/img/title-icon.svg" alt="coin">Coin</a>
+                        <div>
                         <ul class="new-user-nav-menu">
                             <li class="nav-item"><a href="/login">Log In</a></li>
                             <li class="nav-item"><a class="nav-link" href="/register">Sign Up</a></li>
                         </ul>
                     </div>
-                        <h2>MyСoin - manage your financial problems</h2>
-                        <p>Track your cashflow in different currencies, categories; 
-                            monitor statistics and history</p>
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <h3>Use everywhere at anytime</h3>
+                </header>
                     {% endif %}
                     
 
-            
+     
                  
-        <main class="container-fluid py-5 text-center">
-            <div class="col-md-10">
-                
-            </div>
                 {% with messages = get_flashed_messages(with_categories = True) %}
                     {% if messages %}
                         {% for category, message in messages %}
@@ -91,8 +81,7 @@
                     {% endif %}
                 {% endwith %}
             {% block main %}{% endblock %}
-        </main>
-        
+      
         <footer></footer>
         <script src="../static/js/burger-menu.js"></script>
         <script src="../static/js/user-dropdown-menu.js"></script>
