@@ -90,10 +90,12 @@ def wallet():
             money = cash_usd_in_eur + cash_uah_in_eur + float(cash_eur)
         my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        if not my_coin:
+            render_template("emptywallet.html",name = name[0]["username"])
         try:
             return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money,cash_uah = cash_uah,cash_usd = cash_usd,cash_eur =cash_eur,uah_income = uah_income,usd_income = usd_income,eur_income= eur_income,uah_expence =uah_expence,usd_expence = usd_expence, eur_expence = eur_expence)
         except TypeError:
-            render_template("emptywallet.html",name = name[0]["username"])
+            return render_template("emptywallet.html",name = name[0]["username"])
     else:
         uah_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'uah'", session["user_id"])[0]["sum(count)"]
         usd_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'usd'", session["user_id"])[0]["sum(count)"]
@@ -124,12 +126,14 @@ def wallet():
         cash_eur_in_uah = float(round(cash_eur_in_uah, 2))
         cash_uah = float(round(cash_uah, 2))
         money = cash_usd_in_uah + cash_eur_in_uah + float(cash_uah)
-        my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
+        my_coin = db.execute("SELECT id,type,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        if not my_coin:
+            return render_template("emptywallet.html",name = name[0]["username"])
         try:
-            return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money)
+            return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money,)
         except TypeError:
-            render_template("emptywallet.html",name = name[0]["username"])
+            return render_template("emptywallet.html",name = name[0]["username"])
 
 
 @app.route('/delete-post/<int:deleted_id>')
@@ -492,8 +496,8 @@ def settings():
         if not check_password_hash(rows[0]["hash"], request.form.get("oldpassword")):
             return apology("please enter correct password", 400)
         if check_password_hash(rows[0]["hash"], request.form.get("oldpassword")):
-            if not request.form.get("newpassword"):
-                return apology("must provide newpassword", 400)
+            if request.form.get("newpassword") != request.form.get("confirm") or not request.form.get("confirm") or not request.form.get("newpassword"):
+                return apology("your new passwords is different", 400)
             else:
                 db.execute("UPDATE users SET hash = ? WHERE id = ?",generate_password_hash(request.form.get("newpassword"), method='pbkdf2:sha256', salt_length=8), session["user_id"])
         return redirect("/login")
