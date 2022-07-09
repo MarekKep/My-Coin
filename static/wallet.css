@@ -37,7 +37,7 @@
 .wallet-history {
     font-family: "Klee One";
 }
-.wallet-history-title, .wallet-history-description {
+.wallet-history-title, .wallet-history-description-expense, .wallet-history-description-income {
     text-align: center;
 }
 .wallet-history-title {
@@ -106,6 +106,9 @@ td {
   overflow-y: auto;
   height: 330px;
 }
-.wallet-history-expense {
+.wallet-history-description-expense {
     color: red;
+}
+.wallet-history-description-income {
+    color: rgb(5, 148, 5);
 }

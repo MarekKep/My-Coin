@@ -172,7 +172,7 @@ def wallet():
         cash_eur_in_uah = float(round(cash_eur_in_uah, 2))
         cash_uah = float(round(cash_uah, 2))
         money = cash_usd_in_uah + cash_eur_in_uah + float(cash_uah)
-        my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
+        my_coin = db.execute("SELECT id,type,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
         try:
             return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money)

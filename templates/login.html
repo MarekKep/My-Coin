@@ -1,24 +1,50 @@
-{% extends "index.html" %}
+<!DOCTYPE html>
 
-{% block title %}
-    Log In
-{% endblock %}
-
-{% block main %}
-    <form action="/login" method="post">
-        <div class="">
-            <input autocomplete="off" autofocus class="" id="username" name="username" placeholder="Username" type="text">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <link href="../static/login.css" rel="stylesheet">
+        <link rel="shortcut icon" href="../static/img/title-icon.svg">
+        <title>MyCoin</title>
+    </head>
+    <body class="new-user-login-page">
+    <header>
+        <div class="company-header">
+            <a class="company-title" href="/">My<img class="company-logo" src="../static/img/title-icon.svg" alt="coin">Coin</a>
         </div>
-        <div class="">
+    </header>    
+    
+    <main class="login-user-page" action="/login" method="post">
+        <div class="login-fields">
+            <img src="../static/img/Email-icon.svg" alt="">
+            <input autocomplete="off" id="username" name="username" placeholder="Email" type="text">
+        </div>
+        <div class="login-fields">
+            <img src="../static/img/password-icon.svg" alt="">
             <input class="" id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <div class="">
-            <label class="" for="flexCheckDefault">
+        </div>        
+        <div class="login-remember-input">
+            <div class="remember-me-checkbox">
             <input class="" type="checkbox" value="me" name = "remember" checked>
-              Remember me
-            </label>
+            <p>Remember me</p>
+            </div>
+            <div class="forgot-password">
+            <a href="/recovery_password">Forgot password?</a>
+            </div>
         </div>
-        <button class="" type="submit">Log In</button>
-        <h6><a href="http://127.0.0.1:5000/recovery_password">Forgot your password?</a></h6>
-    </form>
-{% endblock %}
+        <div class="login-register-link">
+            <div>
+            <p class="dont-have-account">Don’t have an account yet?</p>
+            </div>
+        <div>
+            <a href="/register">Register now</a>
+        </div>
+        </div>
+        <div class="login-button">
+        <button type="submit">Log In</button>
+    </div>
+    </main>
+</body>
+</html>
+

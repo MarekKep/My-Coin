@@ -1,6 +1,8 @@
 @import url(wallet.css);
 @import url(cashflow.css);
 @import url(home.css);
+@import url(login.css);
+@import url(register.css);
 @import url('https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap');
 
 * {
