@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Statistics
+{% endblock %}
+
+{% block main %}
+    <form action="/statistics" method="get">
+        <h2>Your statistics is empty</h2>
+        <h3>Please add <a href="http://127.0.0.1:5000/cashflow">Cashflow</a> to fill your statistics.
+        </h3>
+    </form>
+{% endblock %}

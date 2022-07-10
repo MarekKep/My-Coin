@@ -35,58 +35,10 @@ def after_request(response):
     return response
 
 
-# @app.route("/", methods=["GET", "POST"])
-# @login_required
-# def index():
-#     return render_template("index.html")
-# if request.method == "POST":
-#     money = request.form.get("money")
-#     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-#     moneys = int(money) + cash[0]["cash"]
-#     db.execute("UPDATE users SET cash = ? WHERE id = ?", moneys, session["user_id"])
-#     return redirect("/")
-
-# else:
-#     """Show portfolio of stocks"""
-#     rows = db.execute("SELECT * FROM purchases WHERE purchase_id = ?", session["user_id"])
-#     count = db.execute("SELECT COUNT(purchase_id) FROM purchases WHERE purchase_id = ?", session["user_id"])
-#     Count = count[0]['COUNT(purchase_id)']
-#     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-#     if not rows:
-#         return render_template("emptyindex.html",cash=cash)
-#     for i in range(Count):
-#         symb = []
-#         symbol = rows[i]["symbol"]
-#         if symbol in symb:
-#             continue
-#         stocks = lookup(symbol)
-#         name = stocks["name"]
-#         share = db.execute("SELECT sum(shares) FROM purchases WHERE symbol = ? and purchase_id = ?", symbol, session["user_id"])
-#         shares = share[0]['sum(shares)']
-#         price = stocks["price"]
-#         total = "%0.2f" % (price * int(shares))
-#         cashes = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-#         cash = cashes[0]["cash"]
-#         symb.append(symbol)
-#         db.execute("DELETE FROM sumpurchases WHERE sumpurchase_id = ? and symbol = ?", session["user_id"], symbol)
-#         db.execute("INSERT INTO sumpurchases(sumpurchase_id,symbol,name,shares,price,total)VALUES(?,?,?,?,?,?)", session["user_id"], symbol, name, shares, price, total)
-#         TOTAL = db.execute("SELECT sum(total) FROM sumpurchases WHERE sumpurchase_id = ?", session["user_id"])
-#         Total = TOTAL[0]["sum(total)"] + cash
-#         sumpurchases = db.execute("SELECT * FROM sumpurchases WHERE sumpurchase_id = ?", session["user_id"])
-#     try:
-#         return render_template("index.html", sumpurchases=sumpurchases, cash=cash, TOTAL=Total)
-#     except TypeError:
-#         return redirect("/")
 @app.route("/wallet", methods=["GET", "POST"])
 @login_required
 def wallet():
     if request.method == "POST":
-    # usd_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-    # usd_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-    # uah_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-    # uah_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-    # eur_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-    # eur_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
         uah_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'uah'", session["user_id"])[0]["sum(count)"]
         usd_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'usd'", session["user_id"])[0]["sum(count)"]
         eur_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'eur'", session["user_id"])[0]["sum(count)"]
@@ -138,10 +90,12 @@ def wallet():
             money = cash_usd_in_eur + cash_uah_in_eur + float(cash_eur)
         my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        if not my_coin:
+            return render_template("emptywallet.html",name = name[0]["username"])
         try:
             return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money,cash_uah = cash_uah,cash_usd = cash_usd,cash_eur =cash_eur,uah_income = uah_income,usd_income = usd_income,eur_income= eur_income,uah_expence =uah_expence,usd_expence = usd_expence, eur_expence = eur_expence)
         except TypeError:
-            render_template("emptywallet.html",name = name[0]["username"])
+            return render_template("emptywallet.html",name = name[0]["username"])
     else:
         uah_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'uah'", session["user_id"])[0]["sum(count)"]
         usd_income = db.execute("SELECT sum(count) FROM cashflow WHERE type = 'income' and cashflow_id = ? and currency = 'usd'", session["user_id"])[0]["sum(count)"]
@@ -174,10 +128,12 @@ def wallet():
         money = cash_usd_in_uah + cash_eur_in_uah + float(cash_uah)
         my_coin = db.execute("SELECT id,type,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        if not my_coin:
+            return render_template("emptywallet.html",name = name[0]["username"])
         try:
-            return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money)
+            return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money,)
         except TypeError:
-            render_template("emptywallet.html",name = name[0]["username"])
+            return render_template("emptywallet.html",name = name[0]["username"])
 
 
 @app.route('/delete-post/<int:deleted_id>')
@@ -186,55 +142,42 @@ def delete(deleted_id):
     db.execute("DELETE FROM count_cashflow WHERE id = ?", int(deleted_id))
     return redirect("/wallet")
 
-    # """Buy shares of stock"""
-    # if request.method == "POST":
-    #     symbol = request.form.get("symbol")
-    #     stocks = lookup(request.form.get("symbol"))
-    #     if not symbol or stocks is None:
-    #         return apology("symbol is blank or the symbol does not exist", 400)
-    #     shares = request.form.get("shares")
-    #     if not shares or shares is None or not shares.isdigit() or int(shares) <= 0:
-    #         return apology("you do not write a number of shares", 400)
-    #     money = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-    #     price = stocks['price']
-    #     name = stocks['name']
-    #     change = money[0]["cash"] - (price * float(shares))
-    #     if change < 0:
-    #         return apology("you does not have money to buy",400)
-    #     db.execute("INSERT INTO purchases(purchase_id,symbol,name,shares,price)VALUES(?,?,?,?,?)", session["user_id"], stocks['symbol'], name, shares, price)
-    #     db.execute("INSERT INTO buy(buy_id,symbol,shares,price)VALUES(?,?,?,?)", session["user_id"], symbol, shares, price)
-    #     db.execute("UPDATE users SET cash = ? WHERE id = ?", change, session["user_id"])
-    #     return redirect("/")
-    # else:
-    #     return render_template("buy.html")
-
 
 @app.route("/statistics")
 @login_required
 def statistics():
     name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-
-    income_1_category = db.execute("SELECT sum(count) FROM cashflow WHERE id = ?", session["user_id"])
-    expense = db.session.query("SELECT username FROM users WHERE id = ?", session["user_id"])
-    income = []
-    expense = []
-    for total_amount, _ in income:
-        income.append(total_amount)
-    for total_amount, _ in expense:
-        expense.append(total_amount)
-    return render_template("statistics.html",name = name[0]["username"],income_vs_expense=json.dumps(income_expense))
-    # """Show history of transactions"""
-    # buy = db.execute("SELECT * FROM buy WHERE buy_id = ? ORDER BY daytime DESC", session["user_id"])
-    # sell = db.execute("SELECT * FROM sell WHERE sell_id = ? ORDER BY daytime DESC", session["user_id"])
-    # return render_template("history.html", buy=buy, sell=sell)
-
+    my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
+    if not my_coin:
+        return render_template("emptystatistics.html",name = name[0]["username"])
+    sum_expense_categories = db.execute("SELECT sum(count_entertainment),sum(count_grocery),sum(count_health),sum(count_transport),sum(count_cafe),sum(count_householding),sum(count_others) FROM count_cashflow WHERE count_cashflow_id = ?", session["user_id"])
+    sum_income_categories = db.execute("SELECT sum(count_salary),sum(count_other) FROM count_cashflow WHERE count_cashflow_id = ?", session["user_id"])
+    salary = sum_income_categories[0]["sum(count_salary)"]
+    other = sum_income_categories[0]["sum(count_other)"]
+    sum_income = salary + other
+    salary = salary/sum_income * 100
+    other = other/sum_income * 100
+    entertainment = sum_expense_categories[0]["sum(count_entertainment)"]
+    grocery = sum_expense_categories[0]["sum(count_grocery)"]
+    health = sum_expense_categories[0]["sum(count_health)"]
+    transport = sum_expense_categories[0]["sum(count_transport)"]
+    cafe = sum_expense_categories[0]["sum(count_cafe)"]
+    householding = sum_expense_categories[0]["sum(count_householding)"]
+    others = sum_expense_categories[0]["sum(count_others)"]
+    sum_expense = entertainment + grocery + health + transport + cafe + householding + others
+    entertainment = entertainment/sum_expense * 100
+    grocery = grocery/sum_expense * 100
+    health = health/sum_expense * 100
+    transport = transport/sum_expense * 100
+    cafe = cafe/sum_expense * 100
+    householding = householding/sum_expense * 100
+    others = others/sum_expense * 100
+    return render_template("statistics.html",name = name[0]["username"],salary= round(salary,2),other = round(other,2),others= round(others,2),householding=round(householding,2),cafe=round(cafe,2),transport=round(transport,2),health=round(health,2),grocery=round(grocery,2),entertainment=round(entertainment,2))
+  
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-
-    # Forget any user_id
-    # session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -288,14 +231,6 @@ def logout():
 def home():
     name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
     return render_template("home.html",name = name[0]["username"])
-    # """Get stock quote."""
-    # if request.method == "POST":
-    #     stock = lookup(request.form.get("symbol"))
-    #     if stock is None:
-    #         return apology("Uncorrect symbol", 400)
-    #     return render_template("quoted.html", stock=stock)
-    # else:
-    #     return render_template("quote.html")
 
 
 @app.route("/")
@@ -351,13 +286,6 @@ def register():
 @login_required
 def cashflow():
     if request.method == "POST":
-        # usd_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        # usd_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        # uah_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        # uah_to_eur = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=UAH&to_currency=EUR&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        # eur_to_uah = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=UAH&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-        # eur_to_usd = float(requests.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey="KVRY6LAP4SU05Q6Z"').json()["Realtime Currency Exchange Rate"]["5. Exchange Rate"])
-
         if not request.form.get("income_count") or not request.form.get("currency_income") or not request.form.get("category_income"):
             if not request.form.get("expense_count") or not request.form.get("currency_expense") or not request.form.get("category_expense"):
                 return apology("please correctly enter the expence or income form",400)
@@ -497,41 +425,12 @@ def cashflow():
                         db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0',?,'0')", session["user_id"], request.form.get("category_expense"),int(request.form.get("expense_count")))
                     else:
                         db.execute("INSERT INTO count_cashflow(count_cashflow_id, category_cashflow,count_salary,count_other,count_entertainment,count_grocery,count_health, count_transport,count_cafe, count_householding,  count_others )VALUES(?,?,'0','0','0','0','0','0','0','0',?)", session["user_id"],request.form.get("category_expense"), int(request.form.get("expense_count")))
-        return redirect("/wallet")
+        name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        return render_template("cashflow.html",name = name[0]["username"])
     else:
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
         return render_template("cashflow.html",name = name[0]["username"])
-    # """Sell shares of stock"""
-    # if request.method == "POST":
-    #     symbol = request.form.get("symbol")
-    #     stocks = lookup(request.form.get("symbol"))
-    #     if not symbol or stocks is None:
-    #         return apology("symbol is blank or the symbol does not exist", 400)
-    #     purchase = db.execute("SELECT symbol,sum(shares) FROM purchases WHERE purchase_id = ? and symbol = ?", session["user_id"], symbol)
-    #     symbol1 = purchase[0]["symbol"]
-    #     if not symbol1:
-    #         return apology("You does not have a shares of this company", 400)
-    #     name = stocks['name']
-    #     shares = request.form.get("shares")
-    #     shares1 = purchase[0]["sum(shares)"]
-    #     if shares1 < int(shares):
-    #         return apology(f"You does not have {shares} shares of this company", 400)
-    #     stonks = shares1 - int(shares)
-    #     price = stocks['price']
-    #     db.execute("DELETE FROM purchases WHERE purchase_id = ? and symbol = ?", session["user_id"], symbol)
-    #     db.execute("INSERT INTO purchases(purchase_id,symbol,name,shares,price)VALUES(?,?,?,?,?)", session["user_id"], symbol, name, stonks, price)
-    #     db.execute("UPDATE sumpurchases SET shares = ? WHERE sumpurchase_id = ? and symbol = ?", stonks, session["user_id"], symbol)
-    #     profit = int(shares) * price
-    #     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-    #     profit1 = profit + cash[0]["cash"]
-    #     db.execute("INSERT INTO sell(sell_id,symbol,shares,price)VALUES(?,?,?,?)", session["user_id"], symbol, shares, price)
-    #     db.execute("UPDATE users SET cash = ? WHERE id = ?", profit1, session["user_id"])
-    #     db.execute("DELETE FROM purchases WHERE shares = '0' and purchase_id = ? and symbol = ?", session["user_id"], symbol)
-    #     db.execute("DELETE FROM sumpurchases WHERE shares = '0' and sumpurchase_id = ? and symbol = ?", session["user_id"], symbol)
-    #     return redirect("/")
-    # else:
-    #     sumpurchases = db.execute("SELECT * FROM sumpurchases WHERE sumpurchase_id = ?", session["user_id"])
-    #     return render_template("sell.html",sumpurchases=sumpurchases )
+
 
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
@@ -600,8 +499,8 @@ def settings():
         if not check_password_hash(rows[0]["hash"], request.form.get("oldpassword")):
             return apology("please enter correct password", 400)
         if check_password_hash(rows[0]["hash"], request.form.get("oldpassword")):
-            if not request.form.get("newpassword"):
-                return apology("must provide newpassword", 400)
+            if request.form.get("newpassword") != request.form.get("confirm") or not request.form.get("confirm") or not request.form.get("newpassword"):
+                return apology("your new passwords is different", 400)
             else:
                 db.execute("UPDATE users SET hash = ? WHERE id = ?",generate_password_hash(request.form.get("newpassword"), method='pbkdf2:sha256', salt_length=8), session["user_id"])
         return redirect("/login")
