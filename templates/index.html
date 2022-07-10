@@ -6,6 +6,7 @@
         <meta name="viewport" content="initial-scale=1, width=device-width">
         <link href="/static/index.css" rel="stylesheet">
         <link rel="shortcut icon" href="../static/img/title-icon.svg">
+        <link rel="stylesheet" href="login.html">
         <!-- <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
@@ -16,11 +17,10 @@
     </head>
 
     <body>
-        
-        <header>
-            <a class="company-title" href="/home">My<img class="company-logo" src="../static/img/title-icon.svg" alt="coin">Coin</a>
-            <nav class="navbar">
                     {% if session["user_id"] %}
+                    <header>
+                        <a class="company-title" href="index.html">My<img class="company-logo" src="../static/img/title-icon.svg" alt="coin">Coin</a>
+                        <nav class="navbar">
                         <ul class="nav-menu">
                             <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="/wallet">Wallet</a></li>
@@ -33,31 +33,45 @@
                             <a href="#"><img src="../static/img/facebook-icon.svg" alt="facebook-icon"></a>
                             </li>
                         </ul>
-                        <ul class="nav-menu">
+                        <!-- <ul class="nav-menu">
                             <li class="nav-item"><a class="nav-link">{{name}}</a></li>
                             <li class="nav-item"><a class="nav-link" href="/settings">Settings</a></li>
                             <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
-                        </ul>
+                        </ul> -->
+                        <div class="user-nav">
+                            <div class="user-dropdown">
+                                    <img class="user-icon" src="../static/img/user-icon.svg" alt="user icon">
+                                <div class="user-dropdown-menu hide">
+                                    <a class="nav-link">{{name}}</a>
+                                    <hr class="user-dropdown-line">
+                                    <a class="nav-link" href="/settings">Settings</a>
+                                    <a class="nav-link" href="/logout">Log Out</a>
+                                </div>
+                             </div>
+                                <div class="hamburger">
+                                    <span class="bar"></span>
+                                    <span class="bar"></span>
+                                    <span class="bar"></span>
+                                </div>
+                        </div>
+                    </nav>
+                </header> 
                     {% else %}
-                        <ul class="nav-menu">
-                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                    <header class="new-user-header">
+                    
+                        <a class="company-title" href="/home">My<img class="company-logo" src="../static/img/title-icon.svg" alt="coin">Coin</a>
+                        <div>
+                        <ul class="new-user-nav-menu">
+                            <li class="nav-item"><a href="/login">Log In</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/register">Sign Up</a></li>
                         </ul>
+                    </div>
+                </header>
                     {% endif %}
                     
-            </nav>
-            <div class="user-nav">
-            <img class="user-icon" src="../static/img/user-icon.svg" alt="user icon">
-                    <div class="hamburger">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                    </div>
-            </div>
-        </header>          
-        </nav>
-        <main class="container-fluid py-5 text-center">
-            <div class="col-md-10"></div>
+
+     
+                 
                 {% with messages = get_flashed_messages(with_categories = True) %}
                     {% if messages %}
                         {% for category, message in messages %}
@@ -68,10 +82,10 @@
                     {% endif %}
                 {% endwith %}
             {% block main %}{% endblock %}
-        </main>
-        
+      
         <footer></footer>
         <script src="../static/js/burger-menu.js"></script>
+        <script src="../static/js/user-dropdown-menu.js"></script>
     </body>
 
 </html>
