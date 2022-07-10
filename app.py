@@ -91,7 +91,7 @@ def wallet():
         my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
         name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
         if not my_coin:
-            render_template("emptywallet.html",name = name[0]["username"])
+            return render_template("emptywallet.html",name = name[0]["username"])
         try:
             return render_template("wallet.html", my_coin = my_coin,name = name[0]["username"],money = money,cash_uah = cash_uah,cash_usd = cash_usd,cash_eur =cash_eur,uah_income = uah_income,usd_income = usd_income,eur_income= eur_income,uah_expence =uah_expence,usd_expence = usd_expence, eur_expence = eur_expence)
         except TypeError:
@@ -147,6 +147,9 @@ def delete(deleted_id):
 @login_required
 def statistics():
     name = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+    my_coin = db.execute("SELECT id,count,currency,category,strftime('%d.%m.%Y',daytime) FROM cashflow WHERE cashflow_id = ?", session["user_id"])
+    if not my_coin:
+        return render_template("emptystatistics.html",name = name[0]["username"])
     sum_expense_categories = db.execute("SELECT sum(count_entertainment),sum(count_grocery),sum(count_health),sum(count_transport),sum(count_cafe),sum(count_householding),sum(count_others) FROM count_cashflow WHERE count_cashflow_id = ?", session["user_id"])
     sum_income_categories = db.execute("SELECT sum(count_salary),sum(count_other) FROM count_cashflow WHERE count_cashflow_id = ?", session["user_id"])
     salary = sum_income_categories[0]["sum(count_salary)"]
