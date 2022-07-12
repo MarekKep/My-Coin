@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/cashflow" method="post">
+    <form class="cashflow-page" action="/cashflow" method="post">
         <label class="form-check-label" for="flexCheckDefault">
             <h2>Income</h2>
             <div class="income-cashflow">
@@ -29,7 +29,7 @@
                 </select>
             </div>
         </div>
-        <div class="submit-button">
+        <div class="submit-button-income">
         <button type="submit">Add income</button>
     </div>
         </label>
@@ -62,7 +62,7 @@
                     </select>
             </div>
         </div>
-        <div class="submit-button">
+        <div class="submit-button-expense">
             <button type="submit">Add expense</button>
         </div>
         </label>

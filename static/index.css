@@ -3,188 +3,263 @@
 @import url(home.css);
 @import url(login.css);
 @import url(register.css);
-@import url('https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap');
+@import url(empty-wallet.css);
+@import url(empty-statistics.css);
+@import url("https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap");
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Anek Latin", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Anek Latin", sans-serif;
 }
 body {
-    background-image: url("img/MyCoin-background.jpg");
-    background-size: cover;
-    max-width: 100%;
-    height: 100%;
-    background-attachment: fixed;
-    padding: 10px;
+  background-image: url("img/MyCoin-background.jpg");
+  background-size: cover;
+  max-width: 100%;
+  height: 100%;
+  background-attachment: fixed;
+  padding: 10px;
 }
 .hidden-main {
-    
+}
+input,
+select:focus {
+  outline: none;
 }
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
 }
 header .company-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
-    font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
 }
 header .company-title img {
-    padding: 0 2px 0 2px;  
+  padding: 0 2px 0 2px;
 }
 header li {
-    list-style: none;
+  list-style: none;
 }
 header a {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
 header .navbar {
-    display: flex;
-    min-height: 70px;
-    justify-content: center;
-    align-items: center;  
+  display: flex;
+  min-height: 70px;
+  justify-content: center;
+  align-items: center;
 }
 header .user-icon {
-    margin-right: 15px;
+  margin-right: 15px;
 }
 header .nav-menu {
-   display: flex;
-   align-items: center;
-   gap: 60px;
+  display: flex;
+  align-items: center;
+  gap: 60px;
 }
 header .hamburger {
-    display: none;
-    cursor: pointer;
+  display: none;
+  cursor: pointer;
 }
 header .hamburger .bar {
-    display: block;
-    width: 25px;
-    height: 2px;
-    margin: 5px auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    background-color: black;
+  display: block;
+  width: 25px;
+  height: 2px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color: black;
 }
-header .pray-for-ukraine, .social-media-icons {
-    display: none;
+header .pray-for-ukraine,
+.social-media-icons {
+  display: none;
 }
 header .user-dropdown-menu a {
-    display: block;
-    padding: 10px 0 10px 0;
+  display: block;
+  padding: 10px 0 10px 0;
 }
 header .user-dropdown-line {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 header .user-dropdown-menu {
-    border: 1px solid black;
-    width: 185px;
-    position: absolute;
-    right: 50px;
-    
-    text-align: center;
-    background-color: #B9C1C7;
+  border: 1px solid black;
+  width: 185px;
+  position: absolute;
+  right: 50px;
+
+  text-align: center;
+  background-color: #b9c1c7;
 }
 header .user-dropdown {
-    z-index: 51;
+  z-index: 51;
 }
 header .user-dropdown .user-icon {
-    cursor: pointer;
+  cursor: pointer;
 }
 header .hide {
-    display: none;
+  display: none;
+}
+header .hamburger {
+  display: block;
+}
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active .bar:nth-child(1) {
+  top: 50%;
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.active .bar:nth-child(3) {
+  top: 50%;
+  transform: translateY(-7px) rotate(-45deg);
+}
+header .nav-menu {
+  position: fixed;
+  left: -100%;
+  gap: 0;
+  font-size: 30px;
+  top: 70px;
+  height: 100%;
+  flex-direction: column;
+  background-color: #e2e2e2;
+  z-index: 50;
+  width: 100%;
+  text-align: center;
+  transition: 0.3s;
+}
+header .nav-item {
+  margin: 16px 0;
+}
+header .nav-menu.active {
+  left: 0;
+}
+header .user-nav {
+  display: flex;
+}
+header .pray-for-ukraine {
+  padding-top: 50px;
+  display: block;
+}
+header .social-media-icons {
+  display: flex;
+  padding-top: 50px;
+}
+header .social-media-icons a {
+  padding: 15px;
+}
+header .new-user-nav-menu {
+  display: flex;
+}
+header .new-user-nav-menu li {
+  margin: 0 5px 0 10px;
+}
+header .new-user-nav-menu .nav-link {
+  background-color: #b9c1c7;
+  padding: 8px 20px;
+}
+.new-user-home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 70px;
+}
+.new-user-home-page img {
+  width: 80px;
+  height: 80px;
+}
+.new-user-home-page h2 {
+  width: 300px;
+  margin-bottom: 40px;
+  font-size: 28px;
+}
+.new-user-home-page p {
+  font-family: "Klee One", sans-serif;
+  margin-bottom: 60px;
+  width: 300px;
+  font-size: 20px;
+}
+.new-user-home-page .categories-icons {
+  margin-bottom: 80px;
 }
 
-@media (max-width: 768px) {
-    header .hamburger {
-        display: block;
+@media (min-width: 768px) {
+    header .company-title {
+        font-size: 35px;
     }
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
+    .company-title img {
+        width: 50px;
+        height: 50px;
     }
-    .hamburger.active .bar:nth-child(1) {
-        top: 50%;
-        transform: translateY(7px) rotate(45deg);
+    .new-user-nav-menu .nav-link {
+        padding: 20px 25px;
     }
-    .hamburger.active .bar:nth-child(3) {
-        top: 50%;
-        transform: translateY(-7px) rotate(-45deg);
+    .new-user-nav-menu .nav-item {
+        margin-left: 20px;
     }
-    header .nav-menu {
-        position: fixed;
-        left: -100%;
-        gap: 0;
+    .new-user-header {
         font-size: 30px;
-        top: 70px;
-        height: 100%;
-        flex-direction: column;
-        background-color: #E2E2E2;
-        z-index: 50;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-    }
-    header .nav-item {
-        margin: 16px 0;
-    }
-    header .nav-menu.active {
-        left: 0;
-    }
-    header .user-nav {
-        display: flex;
-    }
-    header .pray-for-ukraine {
-        padding-top: 50px;
-        display: block;
-    }
-    header .social-media-icons {
-        display: flex;
-        padding-top: 50px;
-    }
-    header .social-media-icons a {
-        padding: 15px;
-    }
-    header .new-user-nav-menu {
-        display: flex;
-    }
-    header .new-user-nav-menu li {
-        margin: 0 5px 0 10px;
-    }
-    header .new-user-nav-menu .nav-link {
-        background-color: #B9C1C7;
-        padding: 8px 20px;
     }
     .new-user-home-page {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        margin-top: 70px;
-    }
-    .new-user-home-page img {
-        width: 80px;
-        height: 80px;
-    }
-    .new-user-home-page h2 {
-       width: 300px;
-       margin-bottom: 40px;
-       font-size: 28px;
+        margin-top: 100px;
     }
     .new-user-home-page p {
-        font-family: "Klee One", sans-serif;
-        margin-bottom: 60px;
-        width: 300px;
-        font-size: 20px;
+        width: 600px;
+        font-size: 40px;
+        margin: 100px 0 100px 0;
+    }
+    .new-user-home-page h2 {
+        width: 100%;
+        font-size: 40px;
+    }
+    .new-user-home-page img {
+        width: 140px;
+        height: 140px;
+    }
+    .new-user-home-page h3 {
+        font-size: 40px;
     }
     .new-user-home-page .categories-icons {
-        margin-bottom: 80px;
+        margin-bottom:  200px;
+    }
+    .main-header-page .hamburger {
+        display: none;
+    }
+    .main-header-page .nav-menu {
+        display: flex;
+        flex-direction: row;
+        top: 0;
+        left: 0;
+        position:relative;
+        margin-right: 10px;
+        z-index: 0;
+        transition: none;
+    }
+    .main-header-page .user-dropdown img{
+        width: 35px;
+        height: 35px;
+    }
+    .main-header-page {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .main-header-page .nav-menu .nav-item {
+        padding: 0 20px 0 20px;
+        margin: 0;
+    }
+    .main-header-page .nav-menu img {
+        display: none;
+    }
+    .main-header-page .social-media-icons {
+        display: none;
     }
 }
-

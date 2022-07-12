@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/statistics" method="get">
-        <h2>Your statistics is empty</h2>
-        <h3>Please add <a href="http://127.0.0.1:5000/cashflow">Cashflow</a> to fill your statistics.
-        </h3>
+    <form class="empty-statistics" action="/statistics" method="get">
+        <h2 class="empty-statistics-title">Your statistics are empty</h2>
+        <p class="empty-statistics-description">Please add amounts in <a class="cashflow-link" href="http://127.0.0.1:5000/cashflow">Cashflow</a> to fill your statistics.
+        </p>
     </form>
 {% endblock %}
