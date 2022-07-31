@@ -1,0 +1,21 @@
+.empty-statistics {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 200px;
+    text-align: center;
+}
+.empty-statistics .empty-statistics-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+.empty-statistics .empty-statistics-description {
+    font-size: 24px;
+    font-family: "Klee One", sans-serif;
+}
+.empty-statistics .cashflow-link {
+    text-decoration: underline;
+    color: black;
+    font-style: italic;
+}
