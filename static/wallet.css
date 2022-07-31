@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap');
+.money-in-wallet {
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.wallet-page table {
+    font-size: 15px;
+}
+.in-your-wallet {
+    padding: 10px 0 10px 0;
+    text-align: center;
+}
+.in-your-wallet-title {
+    font-size: 40px;
+}
+#currency {
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+#currency-value {
+    background: none;
+    border: none;
+}
+.wallet-page {
+    margin-top: 20px;
+}
+.delete-button {
+    background: none;
+    border: none;
+}
+.wallet-history {
+    font-family: "Klee One";
+}
+.wallet-history-title, .wallet-history-description-expense, .wallet-history-description-income {
+    text-align: center;
+}
+.wallet-history-title {
+    font-size: medium;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-start;
+}
+.wallet-history-title h3 {
+    font-size: 15px;
+}
+.wallet-history-title .wallet-category {
+    margin-right: 65px;
+    margin-left: 38px;
+}
+.wallet-history-title .wallet-currency {
+    margin-left: 12px;
+}
+td {
+    padding: 7px 12px 7px 6px;
+    font-size: 15px;
+}
+.wallet-upper-line {
+    margin-bottom: 15px;
+    margin-top: 30px;
+    width: 100%;
+    height: 1.5px;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    border: black;
+}
+.wallet-convert-button {
+    background-color: darkgreen;
+    color: white;
+    border-color: darkgreen;
+    padding: 5px 30px;
+    font-size: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.wallet-description div {
+    padding: 10px 0 10px 0;
+}
+.wallet-description h5 {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wallet-description {
+    cursor: pointer;
+    text-align: center;
+}
+.wallet-description h6 {
+    text-align: left;
+}
+.wallet-details-title {
+    font-size: 23px;
+}
+.wallet-page select {
+    position: relative;
+}
+.wallet-page-history {
+  margin-top: 10px;
+  overflow-y: auto;
+  height: 330px;
+}
+.wallet-history-description-expense {
+    color: red;
+}
+.wallet-history-description-income {
+    color: rgb(5, 148, 5);
+}

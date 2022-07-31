@@ -1,20 +1,44 @@
-{% extends "index.html" %}
+<!DOCTYPE html>
 
-{% block title %}
-    Register
-{% endblock %}
-
-{% block main %}
-    <form action="/register" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <link href="../static/register.css" rel="stylesheet">
+        <link rel="shortcut icon" href="../static/img/title-icon.svg">
+        <title>MyCoin</title>
+    </head>
+    <body class="new-user-register-page">
+    <header>
+        <div class="company-header">
+            <a class="company-title" href="/">My<img class="company-logo" src="../static/img/title-icon.svg" alt="coin">Coin</a>
         </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+    </header>    
+    
+    <form class="login-user-page" action="/login" method="post">
+        <div class="login-fields">
+            <img src="../static/img/Email-icon.svg" alt="">
+            <input autocomplete="off" id="username" name="username" placeholder="Email" type="text">
         </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirmation" type="password">
+        <div class="login-fields">
+            <img src="../static/img/password-icon.svg" alt="">
+            <input class="" id="password" name="password" placeholder="Password" type="password">
         </div>
-        <button class="btn btn-primary" type="submit">Register</button>
+        <div class="login-fields">
+            <img src="../static/img/password-icon.svg" alt="">
+            <input class="" id="password" name="password" placeholder="Confirm password" type="password">
+        </div>         
+        <div class="login-register-link">
+            <div>
+            <p class="dont-have-account">Already have an account?</p>
+            </div>
+        <div>
+            <a href="/login">Log In</a>
+        </div>
+        </div>
+        <div class="login-button">
+        <button type="submit">Sign Up</button>
+    </div>
     </form>
-{% endblock %}
+</body>
+</html>
