@@ -68,6 +68,7 @@
                         </ul>
                     </div>
                 </header>
+                
                     {% endif %}
                     
 
@@ -82,11 +83,22 @@
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
+                
             {% block main %}{% endblock %}
-      
-        <footer></footer>
+            
+            <footer class="new-user-home-footer">
+                <div class="footer-social-medias">
+                    <a href="#"><img src="../static/img/instagram-icon.svg" alt="instagram-icon"></a>
+                    <a href="#"><img src="../static/img/twitter-icon.svg" alt="twitter-icon"></a>
+                    <a href="#"><img src="../static/img/facebook-icon.svg" alt="facebook-icon"></a>
+                </div>
+                <div>
+                    <img src="../static/img/pray-for-ukraine-icon.svg" alt="pray-for-ukraine-image">
+                </div>
+            </footer>
+        <script src="../static/js/active-nav.js"></script>
         <script src="../static/js/burger-menu.js"></script>
         <script src="../static/js/user-dropdown-menu.js"></script>
     </body>
-
+    
 </html>

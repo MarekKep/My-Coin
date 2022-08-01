@@ -19,3 +19,16 @@
     color: black;
     font-style: italic;
 }
+
+@media (min-width: 768px) {
+    .empty-wallet {
+        margin-bottom: 300px;
+        margin-top: 300px;
+    }
+    .empty-wallet .empty-wallet-title {
+        font-size: 60px;
+    }
+    .empty-wallet .empty-wallet-description {
+        font-size: 35px;
+    }
+}

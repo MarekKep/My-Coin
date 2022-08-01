@@ -36,6 +36,7 @@
 }
 .wallet-history {
     font-family: "Klee One";
+    text-align: center;
 }
 .wallet-history-title, .wallet-history-description-expense, .wallet-history-description-income {
     text-align: center;
@@ -50,11 +51,16 @@
     font-size: 15px;
 }
 .wallet-history-title .wallet-category {
-    margin-right: 65px;
-    margin-left: 38px;
+   
+    display: flex;
 }
 .wallet-history-title .wallet-currency {
-    margin-left: 12px;
+   
+    display: flex;
+}
+.wallet-history-title .wallet-amount {
+ 
+    display: flex;
 }
 td {
     padding: 7px 12px 7px 6px;
@@ -105,10 +111,43 @@ td {
   margin-top: 10px;
   overflow-y: auto;
   height: 330px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
-.wallet-history-description-expense {
+.wallet-history-expense {
     color: red;
 }
-.wallet-history-description-income {
+.wallet-history-income {
     color: rgb(5, 148, 5);
+}
+.new-user-home-footer {
+    float: inline-end;
+}
+
+@media (min-width: 768px) {
+    .wallet-page-history td {
+        font-size: 25px;
+    }
+    .wallet-history-title h3 {
+        font-size: 25px;
+    }
+    .wallet-page-history {
+        height: 680px;
+    }
+    .money-in-wallet label span {
+        font-size: 45px;
+    }
+    .money-in-wallet button {
+        font-size: 25px;
+    }
+    .wallet-history-title {
+        position: fixed;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .wallet-page-history .new-user-home-footer {
+        display: none;
+    }
 }
