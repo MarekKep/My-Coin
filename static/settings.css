@@ -1,0 +1,13 @@
+.settings-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.settings-page .settings-horizontal-line {
+    border: 0.5px solid black;
+    width: 80%;
+}
+.settings-page h3, select, input, button {
+    font-family: "Klee One";
+}

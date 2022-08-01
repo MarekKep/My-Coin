@@ -5,6 +5,7 @@
 @import url(register.css);
 @import url(empty-wallet.css);
 @import url(empty-statistics.css);
+@import url(settings.css);
 @import url("https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap");
 
 * {
