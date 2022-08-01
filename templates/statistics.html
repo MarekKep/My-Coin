@@ -5,7 +5,107 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/statistics" method="get">
-        <h1>Here could be your Statistics</h1>
+    <form class="statistics-page" action="/statistics" method="get">
+        <div class="col-xs-10 col-sm-6 col-md-6">
+                <div class="card-body">
+                    <div class="col-md-6" >
+                        <div class="topleft" >
+                            <div class="chart-container">
+                                <canvas id="income" style="height: 60px; width: 100px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xs-10 col-sm-6 col-md-6">
+                <div class="card-body">
+                    <div class="chart-container"style="display: flex; align-items: center; justify-content: center;" >
+                        <canvas id="expense" style="height: 60px; width: 100px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block javascript %}
+        <script>
+            let income_chart = new Chart(income, {
+                    type: 'pie',
+                    data: {
+                    labels:['salary', 'other'],
+                        datasets: [{
+                            label: "Statistics of income",
+                            data: [{{salary}},{{other}}],
+                            backgroundColor: ['#5DA5DA ', '#FAA43A', '#60BD68',
+                                '#B276B2', '#E16851', '#FB8267'],
+        
+                            borderWidth: 1,
+                            hoverBorderColor:"Black",
+                            hoverBorderWidth: 2,
+                            hoverBackgroundColor: 'rgb(60, 144, 47)',
+                            pointHoverRadius: 5
+                        }],
+                    },
+                    options: {
+                            title: {
+                                display: true,
+                                    text: "Statistics of income",
+                                        fontColor: "black",
+                                        fontSize: 20,
+                            },
+                            legend: {
+                                position: "bottom",
+                                    labels: {
+                                    fontColor: "black"
+                                },
+                                display: true,
+                            },
+        
+                            elements: {
+                                hitRadius: 3,
+                            }
+                    }
+                })
+                let expense_chart = new Chart(expense, {
+                    type: 'pie',
+                    data: {
+                    labels:['entertainment', 'grocery','health', 'transport','cafe', 'householding','others'],
+                        datasets: [{
+                            label: "Statistics of expense",
+                            data: [{{entertainment}},{{grocery}},{{health}},{{transport}},{{cafe}},{{householding}},{{others}}],
+                            backgroundColor: ['#5DA5DA ', '#FB8267', '#FAA43A',
+                                '#d6d6d6', '#14A4B5', '#60BD68', '#B276B2'],
+        
+                            borderWidth: 1,
+                            borderColor: "white",
+                            hoverBorderColor: "black",
+                            hoverBorderWidth: 2,
+                            hoverBackgroundColor: 'rgb(60, 144, 47)',
+                            pointHoverRadius: 5
+                        }],
+                    },
+                    options: {
+                            title: {
+                                display: true,
+                                    text: "Statistics of expense",
+                                        fontColor: "black",
+                                        fontSize: 20,
+                            },
+                            legend: {
+                                position: "right",
+                                    labels: {
+                                    fontColor: "black"
+                                },
+                                display: true,
+                            },
+        
+                            elements: {
+                                hitRadius: 3,
+                            }
+                    }
+                })
+        </script>
+        {% endblock%}
     </form>
+
 {% endblock %}
