@@ -1,0 +1,55 @@
+.user-home-page {
+   margin: 0 auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   border: none;
+   margin-top: 20px;
+}
+.user-home-page img {
+    width: 270px;
+    height: 180px;
+}
+.article-underline {
+    border: black;
+    background-color: black;
+    height: 0.5px;
+    width: 340px; 
+    margin: 20px 0 30px 0;
+}
+.user-home-page h2, a {
+    text-decoration: none;
+}
+.user-home-page h2 {
+    margin-bottom: 15px;
+}
+.user-home-page-scroll {
+    overflow-y: auto;
+    height:570px;
+}
+
+@media (min-width: 768px) {
+    .user-home-page {
+        margin-top: 100px;
+    }
+    .user-home-page-scroll {
+        height: 650px;
+        margin-bottom: 50px;
+        width: 500px;
+    }
+    .article-underline {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    .user-home-page img {
+        width: 350px;
+        height: 220px;
+    }
+    .user-home-page h2 {
+        font-size: 35px;
+    }
+}
