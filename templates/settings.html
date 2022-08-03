@@ -5,18 +5,26 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/settings" method="post">
-        <h6>Old password</h6>
+    <form class="settings-page" action="/settings" method="post">
+        <h2>Settings</h2>
+        <hr class="settings-horizontal-line">
+        <h3>Change password</h3>
         <div class="mb-3">
             <input class="form-control mx-auto w-auto" id="oldpassword" name="oldpassword" placeholder="Old Password" type="password">
         </div>
-        <h6>New password</h6>
         <div class="mb-3">
             <input class="form-control mx-auto w-auto" id="newpassword" name="newpassword" placeholder="New password" type="password">
         </div>
         <div class="mb-3">
             <input class="form-control mx-auto w-auto" id="confirm" name="confirm" placeholder="Confirm new password" type="password">
         </div>
-        <button class="btn btn-primary" type="submit">Change password</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <hr class="settings-horizontal-line">
+        <h3>Choose theme</h3>
+        <select id="theme-dropdown">
+            <option id="theme-value" value="default">Default</option>
+            <option id="theme-value" value="dark">Dark</option>
+            <option id="theme-value" value="pastel">Pastel</option>
+        </select>
     </form>
 {% endblock %}
