@@ -22,7 +22,6 @@ text-align: center;
     padding: 0 5px 0 5px;
 }
 .mb-3 input {
-    margin-top: 8px;
     align-items: center;
 }
 .submit-button-expense, .submit-button-income {
@@ -88,4 +87,44 @@ text-align: center;
     justify-content: center;
     background-color: black;
     border: black;
+}
+
+@media (min-width: 768px) {
+    .income-cashflow h3 {
+        font-size: 35px;
+    }
+    .income-cashflow #category {
+        font-size: 35px;
+    }
+    .income-cashflow #currency-income{
+        font-size: 35px;
+    }
+    .income-cashflow #income-amount {
+        font-size: 35px;
+    }
+    .cashflow-page button {
+        font-size: 35px;
+    }
+    .expense-cashflow h3 {
+        font-size: 35px;
+    }
+    .expense-cashflow #category-expense {
+        font-size: 30px;
+        width: 150px;
+    }
+    .expense-cashflow #currency-expense {
+        font-size: 35px;
+    }
+    .expense-cashflow #expense_count {
+        font-size: 35px;
+    }
+    .expense-cashflow option {
+        font-size: 15px;
+    }
+    .cashflow-page {
+        margin-top: 120px;
+    }
+    .cashflow-page .amount-cashflow {
+        width: 120px;
+    }
 }

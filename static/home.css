@@ -31,5 +31,25 @@
 }
 
 @media (min-width: 768px) {
-    
+    .user-home-page {
+        margin-top: 100px;
+    }
+    .user-home-page-scroll {
+        height: 650px;
+        margin-bottom: 50px;
+        width: 500px;
+    }
+    .article-underline {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    .user-home-page img {
+        width: 350px;
+        height: 220px;
+    }
+    .user-home-page h2 {
+        font-size: 35px;
+    }
 }

@@ -1,4 +1,3 @@
-// User menu
 
 const userDropdown = document.querySelector(".user-icon");
 const dropdownMenu = document.querySelector(".user-dropdown-menu");
