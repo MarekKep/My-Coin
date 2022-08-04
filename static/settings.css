@@ -14,15 +14,36 @@
 .settings-page h2 {
     font-family: "Anek Latin";
 }
-#oldpassword {
-    background-color: #f5f3f3;
-}
-#newpassword {
-    background-color: #f5f3f3;
-}
-#confirm {
-    background-color: #f5f3f3;
+#oldpassword, #newpassword, #confirm {
+    background: #f5f3f3;
 }
 .settings-page .btn-primary {
     background-color: #a5adb4;
+    border: 0;
+    line-height: 1;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.settings-page h2, h3, select, input, button {
+    padding: 10px;
+    color:black;
+}
+.settings-page .mb-3 {
+    border: 0;
+    margin-top: 10px;
+}
+.form-control{
+    border: 0px;
+}
+#theme-dropdown {
+    background: none;
+    border: 0;
+    font-size: 20px;
+}
+.settings-page h3 {
+    font-weight: 600;
 }
