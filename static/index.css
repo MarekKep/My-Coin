@@ -6,6 +6,7 @@
 @import url(empty-wallet.css);
 @import url(empty-statistics.css);
 @import url(settings.css);
+@import url(statistics.css);
 @import url("https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap");
 
 * {
@@ -306,4 +307,34 @@ footer {
     p:first {
       text-transform: lo;
     }
+}
+
+@media (min-width: 1280px) {
+  .new-user-home-page {
+     margin: 0;
+     margin-top: 35px;
+  }
+  .new-user-home-page h2 {
+    font-size: 30px;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+  .new-user-home-page p {
+    font-size: 25px;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+  .new-user-home-page img {
+    width: 100px;
+    height: 100px;
+    margin: 0;
+  }
+  .new-user-home-page h3 {
+    font-size: 30px;
+    margin: 0;
+  }
+  header .user-icon {
+    margin-left: 100px;
+  }
 }

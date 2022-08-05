@@ -15,7 +15,7 @@
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 .company-title {
@@ -154,5 +154,7 @@ input:focus {
     }
 }
 @media (min-width: 1280px) {
-    
+    .login-user-page {
+        margin-top: 150px;
+    }
 }
