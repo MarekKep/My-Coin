@@ -41,24 +41,26 @@
     
     
     <form class="wallet-page-history" action="/wallet" method="get">
-        <!-- <div class="wallet-history-title">
-            <h3 class="wallet-amount">Amount</h3>
-            <h3 class="wallet-currency">Curr.</h3>
-            <h3 class="wallet-category">Category</h3>
-            <h3>Date</h3>
-            <h3></h3>
-        </div> -->
         <table id="tabula" class="table table-dark table-sm" >
             
             {% for coin in my_coin %}
-                <tr class="wallet-history-description">
-                    <td class="wallet-history-income">{{coin["count"]}}</td>
-                    <td class="wallet-history">{{coin["currency"]}}</td>
-                    <td class="wallet-history">{{coin["category"]}}</td>
-                    <td class="wallet-history">{{coin["type"]}}</td>
-                    <td class="wallet-history">{{coin["strftime('%d.%m.%Y',daytime)"]}}</td>
-                    <td class="wallet-history"><a href="{{ url_for('delete', deleted_id = coin["id"]) }}"</a><img class="trash-icon" src="../static/img/trash-icon.svg" alt="delete button"></button></td>
-                </tr>
+                    {%if coin["type"] == "expense" %}
+                        <tr class="wallet-history-description">
+                            <td class="wallet-history-expense">-{{coin["count"]}}</td>
+                            <td class="wallet-history">{{coin["currency"]}}</td>
+                            <td class="wallet-history">{{coin["category"]}}</td>
+                            <td class="wallet-history">{{coin["strftime('%d.%m.%Y',daytime)"]}}</td>
+                            <td class="wallet-history"><a href="{{ url_for('delete', deleted_id = coin["id"]) }}"</a><img class="trash-icon" src="../static/img/trash-icon.svg" alt="delete button"></button></td>
+                        </tr>
+                    {%else%}
+                        <tr class="wallet-history-description">
+                            <td class="wallet-history-income">{{coin["count"]}}</td>
+                            <td class="wallet-history">{{coin["currency"]}}</td>
+                            <td class="wallet-history">{{coin["category"]}}</td>
+                            <td class="wallet-history">{{coin["strftime('%d.%m.%Y',daytime)"]}}</td>
+                            <td class="wallet-history"><a href="{{ url_for('delete', deleted_id = coin["id"]) }}"</a><img class="trash-icon" src="../static/img/trash-icon.svg" alt="delete button"></button></td>
+                        </tr>
+                    {%endif%}
             {% endfor %}
             
     </form>
