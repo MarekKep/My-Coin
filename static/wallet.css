@@ -63,7 +63,7 @@
     display: flex;
 }
 td {
-    padding: 7px 12px 7px 6px;
+    padding: 5px 0px 5px 0px;
     font-size: 15px;
 }
 .wallet-upper-line {
@@ -115,12 +115,6 @@ td {
   display: flex;
   flex-direction: column;
 }
-.wallet-history-expense {
-    color: red;
-}
-.wallet-history-income {
-    color: rgb(5, 148, 5);
-}
 .new-user-home-footer {
     float: inline-end;
 }
@@ -149,5 +143,9 @@ td {
     }
     .wallet-page-history .new-user-home-footer {
         display: none;
+    }
+    .wallet-page td {
+        padding: 7px 12px 7px 6px;
+        font-size: 15px;
     }
 }
