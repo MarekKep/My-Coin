@@ -40,11 +40,6 @@
 .form-control{
     border: 0px;
 }
-#theme-dropdown {
-    background: none;
-    border: 0;
-    font-size: 20px;
-}
 .settings-page h3 {
     font-weight: 600;
 }
@@ -74,7 +69,7 @@
 }
 .settings-page #city {
     background-image: url("img/MyCoin-background.jpg");
-    background-size: cover;
+    background-size: contain;
 }
 
 @media (min-width: 768px) {
@@ -94,9 +89,24 @@
     }
     .settings-page button {
         font-size: 30px;
-
     }
 }
 @media (min-width: 1024px) {
-
+    .settings-page h2 {
+        font-size: 40px;
+    }
+    .settings-page h3 {
+        font-size: 25px;
+    }
+    .settings-page {
+        margin: 0%;
+    }
+    .settings-page input {
+       width: 350px;
+       height: 45px;
+       font-size: 15px;
+    }
+    .settings-page button {
+        font-size: 20px;
+    }
 }
