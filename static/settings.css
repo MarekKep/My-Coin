@@ -12,6 +12,12 @@
 .settings-page h3, select, input, button {
     font-family: "Klee One";
 }
+.settings-page button {
+    cursor: pointer;
+}
+.settings-page button:hover {
+    box-shadow: 10px 5px 5px gray;
+}
 .settings-page h2 {
     font-family: "Anek Latin";
 }
@@ -59,7 +65,7 @@
     flex-direction: row;
 }
 .settings-page #dark {
-    background-image: url("img/dark-theme.jpg");
+    background-image: url("https://cdn.wallpapersafari.com/5/24/IvSYOt.jpg");
     color: white;
     background-size: cover;
 }
