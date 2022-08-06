@@ -7,11 +7,11 @@
 {% block main %}
     <form class="statistics-page" action="/statistics" method="get">
         <div class="col-xs-10 col-sm-6 col-md-6">
-                <div class="card-body">
-                    <div class="col-md-6" >
-                        <div class="topleft" >
-                            <div class="chart-container">
-                                <canvas id="income" style="height: 60px; width: 100px"></canvas>
+                <div class="card-body" style="font-size: 50px">
+                    <div class="col-md-6" style="font-size: 50px">
+                        <div class="topleft" style="font-size: 50px">
+                            <div class="chart-container"style="font-size: 50px">
+                                <canvas id="income" style="height: 30px; width: 50px; align-items: center; justify-content: center;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -22,7 +22,7 @@
         <div class="col-xs-10 col-sm-6 col-md-6">
                 <div class="card-body">
                     <div class="chart-container"style="display: flex; align-items: center; justify-content: center;" >
-                        <canvas id="expense" style="height: 60px; width: 100px;"></canvas>
+                        <canvas id="expense" style="height: 30px; width: 50px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
             let income_chart = new Chart(income, {
                     type: 'pie',
                     data: {
-                    labels:['salary', 'other'],
+                    labels:['salary            ', 'other'],
                         datasets: [{
                             label: "Statistics of income",
                             data: [{{salary}},{{other}}],
@@ -54,7 +54,7 @@
                                         fontSize: 20,
                             },
                             legend: {
-                                position: "bottom",
+                                position: "left",
                                     labels: {
                                     fontColor: "black"
                                 },
@@ -92,7 +92,7 @@
                                         fontSize: 20,
                             },
                             legend: {
-                                position: "right",
+                                position: "left",
                                     labels: {
                                     fontColor: "black"
                                 },

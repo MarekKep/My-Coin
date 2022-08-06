@@ -1,6 +1,27 @@
-.chartjs-render-monitor {
-    width: 500px;
-    height: 500px;
-    color: #6b6969;
-    align-items: center;
+.statistics-page .col-md-6 {
+}
+
+@media (min-width: 768px) {
+    .statistics-page .chart-container {
+        width: 600px;
+    }
+    .statistics-page .card-body {
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        text-align: center;
+        font-size: 50px;
+    }
+    .statistics-page .col-md-6 {
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .statistics-page {
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        
+    }
 }

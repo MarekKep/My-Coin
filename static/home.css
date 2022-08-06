@@ -53,3 +53,27 @@
         font-size: 35px;
     }
 }
+
+@media (min-width: 1280px) {
+    .user-home-page .user-home-page-scroll {
+        display: flex;
+        height: 350px;
+        width: 1300px;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0;
+    }
+    .user-home-page .user-home-page-scroll h2 {
+        font-size: 20px;
+    }
+    .user-home-page .home-page-topics {
+        margin: 0 10px 0 10px;
+    }
+    .user-home-page img {
+        width: 300px;
+        height: 190px;
+    }
+    .user-home-page .article-underline {
+        display: none;
+    }
+}
