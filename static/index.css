@@ -198,120 +198,120 @@ footer {
 }
 
 @media (min-width: 768px) {
-    header .company-title {
-        font-size: 35px;
-    }
-    .company-title img {
-        width: 50px;
-        height: 50px;
-    }
-    header .user-dropdown-menu {
-      border: 1px solid black;
-      width: 350px;
-      position: absolute;
-      right: 50px;
-      text-align: center;
-      background-color: #b9c1c7;
-      font-size: 25px;
-    }
-    header .user-dropdown-menu a {
-      padding: 20px 0 20px 0;
-    }
-    .nav-link:hover {
-      font-weight: bold;
-    }
-    .nav-link:target {
-      font-weight: bold;
-    }
-    .new-user-nav-menu .nav-link {
-        padding: 20px 25px;
-    }
-    .new-user-nav-menu .nav-item {
-        margin-left: 20px;
-    }
-    .new-user-header {
-        font-size: 30px;
-    }
-    .new-user-home-page {
-        margin-top: 70px;
-    }
-    .new-user-home-page p {
-        width: 600px;
-        font-size: 40px;
-        margin: 30px 0 50px 0;
-    }
-    .new-user-home-page h2 {
-        width: 100%;
-        font-size: 40px;
-    }
-    .new-user-home-page img {
-        width: 140px;
-        height: 140px;
-    }
-    .new-user-home-page h3 {
-        font-size: 40px;
-        margin-bottom: 30px;
-    }
-    .new-user-home-page .categories-icons {
-        margin-bottom:  30px;
-    }
-    .main-header-page .hamburger {
-        display: none;
-    }
-    .main-header-page .nav-menu {
-        display: flex;
-        flex-direction: row;
-        top: 0;
-        left: 0;
-        position:relative;
-        margin-right: 10px;
-        z-index: 0;
-        transition: none;
-    }
-    .main-header-page .user-dropdown img{
-        width: 35px;
-        height: 35px;
-    }
-    .main-header-page {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .main-header-page .nav-menu .nav-item {
-        padding: 0 20px 0 20px;
-        margin: 0;
-    }
-    .main-header-page .nav-menu img {
-        display: none;
-    }
-    .main-header-page .social-media-icons {
-        display: none;
-    }
-    footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    footer .footer-social-medias a {
-      margin: 0 10px 0 10px;
-    }
-    footer .footer-social-medias {
-      align-self: flex-end;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    p:first {
-      text-transform: lo;
-    }
+  header .company-title {
+    font-size: 35px;
+  }
+  .company-title img {
+    width: 50px;
+    height: 50px;
+  }
+  header .user-dropdown-menu {
+    border: 1px solid black;
+    width: 350px;
+    position: absolute;
+    right: 50px;
+    text-align: center;
+    background-color: #b9c1c7;
+    font-size: 25px;
+  }
+  header .user-dropdown-menu a {
+    padding: 20px 0 20px 0;
+  }
+  .nav-link:hover {
+    font-weight: bold;
+  }
+  .nav-link:target {
+    font-weight: bold;
+  }
+  .new-user-nav-menu .nav-link {
+    padding: 20px 25px;
+  }
+  .new-user-nav-menu .nav-item {
+    margin-left: 20px;
+  }
+  .new-user-header {
+    font-size: 30px;
+  }
+  .new-user-home-page {
+    margin-top: 70px;
+  }
+  .new-user-home-page p {
+    width: 600px;
+    font-size: 40px;
+    margin: 30px 0 50px 0;
+  }
+  .new-user-home-page h2 {
+    width: 100%;
+    font-size: 40px;
+  }
+  .new-user-home-page img {
+    width: 140px;
+    height: 140px;
+  }
+  .new-user-home-page h3 {
+    font-size: 40px;
+    margin-bottom: 30px;
+  }
+  .new-user-home-page .categories-icons {
+    margin-bottom: 30px;
+  }
+  .main-header-page .hamburger {
+    display: none;
+  }
+  .main-header-page .nav-menu {
+    display: flex;
+    flex-direction: row;
+    top: 0;
+    left: 0;
+    position: relative;
+    margin-right: 10px;
+    z-index: 0;
+    transition: none;
+  }
+  .main-header-page .user-dropdown img {
+    width: 35px;
+    height: 35px;
+  }
+  .main-header-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .main-header-page .nav-menu .nav-item {
+    padding: 0 20px 0 20px;
+    margin: 0;
+  }
+  .main-header-page .nav-menu img {
+    display: none;
+  }
+  .main-header-page .social-media-icons {
+    display: none;
+  }
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  footer .footer-social-medias a {
+    margin: 0 10px 0 10px;
+  }
+  footer .footer-social-medias {
+    align-self: flex-end;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  p:first {
+    text-transform: lo;
+  }
 }
 
 @media (min-width: 1280px) {
   .new-user-home-page {
-     margin: 0;
-     margin-top: 35px;
+    margin: 0;
+    margin-top: 35px;
   }
   .new-user-home-page h2 {
     font-size: 30px;

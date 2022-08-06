@@ -1,111 +1,110 @@
-@import url('https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap");
 .money-in-wallet {
-    font-size: 30px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .wallet-page table {
-    font-size: 15px;
+  font-size: 15px;
 }
 .in-your-wallet {
-    padding: 10px 0 10px 0;
-    text-align: center;
+  padding: 10px 0 10px 0;
+  text-align: center;
 }
 .in-your-wallet-title {
-    font-size: 40px;
+  font-size: 40px;
 }
 #currency {
-    background: none;
-    border: none;
-    font-size: 30px;
-    cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
 }
 #currency-value {
-    background: none;
-    border: none;
+  background: none;
+  border: none;
 }
 .wallet-page {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 .delete-button {
-    background: none;
-    border: none;
+  background: none;
+  border: none;
 }
 .wallet-history {
-    font-family: "Klee One";
-    text-align: center;
+  font-family: "Klee One";
+  text-align: center;
 }
-.wallet-history-title, .wallet-history-description-expense, .wallet-history-description-income {
-    text-align: center;
+.wallet-history-title,
+.wallet-history-description-expense,
+.wallet-history-description-income {
+  text-align: center;
 }
 .wallet-history-title {
-    font-size: medium;
-    font-weight: bold;
-    display: flex;
-    justify-content: flex-start;
+  font-size: medium;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
 }
 .wallet-history-title h3 {
-    font-size: 15px;
+  font-size: 15px;
 }
 .wallet-history-title .wallet-category {
-   
-    display: flex;
+  display: flex;
 }
 .wallet-history-title .wallet-currency {
-   
-    display: flex;
+  display: flex;
 }
 .wallet-history-title .wallet-amount {
- 
-    display: flex;
+  display: flex;
 }
 td {
-    padding: 5px 0px 5px 0px;
-    font-size: 15px;
+  padding: 5px 0px 5px 0px;
+  font-size: 15px;
 }
 .wallet-upper-line {
-    margin-bottom: 15px;
-    margin-top: 30px;
-    width: 100%;
-    height: 1.5px;
-    display: flex;
-    justify-content: center;
-    background-color: black;
-    border: black;
+  margin-bottom: 15px;
+  margin-top: 30px;
+  width: 100%;
+  height: 1.5px;
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  border: black;
 }
 .wallet-convert-button {
-    background-color: darkgreen;
-    color: white;
-    border-color: darkgreen;
-    padding: 5px 30px;
-    font-size: 20px;
-    margin-top: 10px;
-    cursor: pointer;
+  background-color: darkgreen;
+  color: white;
+  border-color: darkgreen;
+  padding: 5px 30px;
+  font-size: 20px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 .wallet-description div {
-    padding: 10px 0 10px 0;
+  padding: 10px 0 10px 0;
 }
 .wallet-description h5 {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .wallet-description {
-    cursor: pointer;
-    text-align: center;
+  cursor: pointer;
+  text-align: center;
 }
 .wallet-description h6 {
-    text-align: left;
+  text-align: left;
 }
 .wallet-details-title {
-    font-size: 23px;
+  font-size: 23px;
 }
 .wallet-page select {
-    position: relative;
+  position: relative;
 }
 .wallet-page-history {
   margin-top: 10px;
@@ -116,36 +115,36 @@ td {
   flex-direction: column;
 }
 .new-user-home-footer {
-    float: inline-end;
+  float: inline-end;
 }
 
 @media (min-width: 768px) {
-    .wallet-page-history td {
-        font-size: 25px;
-    }
-    .wallet-history-title h3 {
-        font-size: 25px;
-    }
-    .wallet-page-history {
-        height: 680px;
-    }
-    .money-in-wallet label span {
-        font-size: 45px;
-    }
-    .money-in-wallet button {
-        font-size: 25px;
-    }
-    .wallet-history-title {
-        position: fixed;
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-    }
-    .wallet-page-history .new-user-home-footer {
-        display: none;
-    }
-    .wallet-page td {
-        padding: 7px 12px 7px 6px;
-        font-size: 15px;
-    }
+  .wallet-page-history td {
+    font-size: 25px;
+  }
+  .wallet-history-title h3 {
+    font-size: 25px;
+  }
+  .wallet-page-history {
+    height: 680px;
+  }
+  .money-in-wallet label span {
+    font-size: 45px;
+  }
+  .money-in-wallet button {
+    font-size: 25px;
+  }
+  .wallet-history-title {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .wallet-page-history .new-user-home-footer {
+    display: none;
+  }
+  .wallet-page td {
+    padding: 7px 12px 7px 6px;
+    font-size: 15px;
+  }
 }

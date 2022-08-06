@@ -1,118 +1,128 @@
 .settings-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25%;
 }
 .settings-page .settings-horizontal-line {
-    border: 0.5px solid black;
-    width: 80%;
+  border: 0.5px solid black;
+  width: 80%;
 }
-.settings-page h3, select, input, button {
-    font-family: "Klee One";
+.settings-page h3,
+select,
+input,
+button {
+  font-family: "Klee One";
 }
 .settings-page button {
-    cursor: pointer;
+  cursor: pointer;
 }
 .settings-page button:hover {
-    box-shadow: 10px 5px 5px gray;
+  box-shadow: 10px 5px 5px gray;
 }
 .settings-page h2 {
-    font-family: "Anek Latin";
+  font-family: "Anek Latin";
 }
-#oldpassword, #newpassword, #confirm {
-    background: #f5f3f3;
+#oldpassword,
+#newpassword,
+#confirm {
+  background: #f5f3f3;
 }
 .settings-page .btn-primary {
-    background-color: #a5adb4;
-    border: 0;
-    line-height: 1;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  background-color: #a5adb4;
+  border: 0;
+  line-height: 1;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
-.settings-page h2, h3, select, input, button {
-    padding: 10px;
-    color:black;
+.settings-page h2,
+h3,
+select,
+input,
+button {
+  padding: 10px;
+  color: black;
 }
 .settings-page .mb-3 {
-    border: 0;
-    margin-top: 10px;
+  border: 0;
+  margin-top: 10px;
 }
-.form-control{
-    border: 0px;
+.form-control {
+  border: 0px;
 }
 .settings-page h3 {
-    font-weight: 600;
+  font-weight: 600;
 }
 .settings-page input {
-    width: 200px;
+  width: 200px;
 }
-.settings-page h3, .theme-select {
-    width: 80%;
+.settings-page h3,
+.theme-select {
+  width: 80%;
 }
 .theme-select button {
-    width: 30%;
-    margin: 5px;
-    color: black;
+  width: 30%;
+  margin: 5px;
+  color: black;
 }
 .theme-select {
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
 }
 .settings-page #dark {
-    background-image: url("https://images.pexels.com/photos/114979/pexels-photo-114979.jpeg?cs=srgb&dl=pexels-veeterzy-114979.jpg&fm=jpg");
-    background-size: cover;
+  background-image: url("https://images.pexels.com/photos/114979/pexels-photo-114979.jpeg?cs=srgb&dl=pexels-veeterzy-114979.jpg&fm=jpg");
+  background-size: cover;
 }
 .settings-page #pastel {
-    background-image: url("img/pastel.jpg");
-    background-size: cover;
+  background-image: url("img/pastel.jpg");
+  background-size: cover;
 }
 .settings-page #city {
-    background-image: url("img/MyCoin-background.jpg");
-    background-size: contain;
+  background-image: url("img/MyCoin-background.jpg");
+  background-size: cover;
 }
 
 @media (min-width: 768px) {
-    .settings-page h2 {
-        font-size: 55px;
-    }
-    .settings-page h3 {
-        font-size: 40px;
-    }
-    .settings-page {
-        margin: 0%;
-    }
-    .settings-page input {
-       width: 450px;
-       height: 60px;
-       font-size: 25px;
-    }
-    .settings-page button {
-        font-size: 30px;
-    }
+  .settings-page h2 {
+    font-size: 55px;
+  }
+  .settings-page h3 {
+    font-size: 40px;
+  }
+  .settings-page {
+    margin: 0%;
+  }
+  .settings-page input {
+    width: 450px;
+    height: 60px;
+    font-size: 25px;
+  }
+  .settings-page button {
+    font-size: 30px;
+  }
 }
 @media (min-width: 1024px) {
-    .settings-page h2 {
-        font-size: 40px;
-    }
-    .settings-page h3 {
-        font-size: 25px;
-    }
-    .settings-page {
-        margin: 0%;
-    }
-    .settings-page input {
-       width: 350px;
-       height: 45px;
-       font-size: 15px;
-    }
-    .settings-page button {
-        font-size: 20px;
-    }
+  .settings-page h2 {
+    font-size: 40px;
+  }
+  .settings-page h3 {
+    font-size: 25px;
+  }
+  .settings-page {
+    margin: 0%;
+  }
+  .settings-page input {
+    width: 350px;
+    height: 45px;
+    font-size: 15px;
+  }
+  .settings-page button {
+    font-size: 20px;
+  }
 }

@@ -1,183 +1,182 @@
-@import url('https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Anek+Latin&family=Klee+One&display=swap");
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Anek Latin", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Anek Latin", sans-serif;
 }
 .new-user-register-page {
-background-image: url("../static/img/login_&_register-page-background.png");
-background-position: center;
-background-attachment: fixed;
-background-size:cover;
-padding: 10px;
-color: white;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+  background-image: url("../static/img/login_&_register-page-background.png");
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  padding: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .company-title {
-display: flex;
-justify-content: center;
-align-items: center;
-font-size: 25px;
-font-weight: bold;
-text-decoration: none;
-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
 }
 .dont-have-account {
-color: #A5ADB4;
+  color: #a5adb4;
 }
 .company-title img {
-padding: 0 2px 0 2px;  
+  padding: 0 2px 0 2px;
 }
 .login-user-page {
-justify-content: center;
-align-items: center;
-flex-direction: column;
-margin-top: 200px;
-font-size: 10px;
-width: 250px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 200px;
+  font-size: 10px;
+  width: 250px;
 }
 .login-fields {
-display: flex;
-justify-content: center;
-align-items: center;  
-padding-top: 15px;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px;
 }
 .login-fields input {
-height: 30px;
-width: 300px;
-background: none;
-border: none;
-color: white;
+  height: 30px;
+  width: 300px;
+  background: none;
+  border: none;
+  color: white;
 }
 .login-fields img {
-width: 10px;
-height: 12px;
-margin-right: 5px;
+  width: 10px;
+  height: 12px;
+  margin-right: 5px;
 }
 .login-fields input::placeholder {
-color: black;
-opacity: 50%;
+  color: black;
+  opacity: 50%;
 }
 .login-fields {
-border-bottom: 2px solid #697483;
+  border-bottom: 2px solid #697483;
 }
 .login-fields input:focus {
-    outline: none;
+  outline: none;
 }
 .login-remember-input {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
 }
 .login-remember-input .remember-me-checkbox {
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 }
 .remember-me-checkbox p {
-font-size: 12px;
-margin-left: 5px;
+  font-size: 12px;
+  margin-left: 5px;
 }
 .login-user-page .forgot-password a {
-text-decoration: none;
-color: white;
-font-style: italic;
+  text-decoration: none;
+  color: white;
+  font-style: italic;
 }
 .login-register-link {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin: 15px 0 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0 15px 0;
 }
 .login-register-link a {
-color: #3F5ECE;
+  color: #3f5ece;
 }
 .login-user-page .login-button {
-display: flex;
-justify-content: center;
-align-items: center;
-text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 .login-user-page button {
-background-color: #A5ADB4;
-padding: 10px 0px 10px 0px;
-border: none;
-width: 100%;
+  background-color: #a5adb4;
+  padding: 10px 0px 10px 0px;
+  border: none;
+  width: 100%;
 }
 @media (min-width: 768px) {
-    .new-user-register-page .company-title {
-        font-size: 50px;
-    }
-    .new-user-register-page .company-title img {
-        width: 60px;
-        height: 60px;
-    }
-    .login-user-page {
-        font-size: 20px;
-        width: 500px;
-        margin-top: 350px;
-    }
-    .remember-me-checkbox p{
-        font-size: 20px;
-    }
-    .remember-me-checkbox input {
-        width: 15px;
-        font-size: 30px;
-        height: 15px;
-    }
-    .login-remember-input {
-        margin-top: 30px;
-    }
-    .login-register-link {
-        margin: 20px 0 30px 0;
-    }
-    .login-button button {
-        padding: 20px 0 20px 0;
-        font-size: 30px;
-    }
-    .login-fields input {
-        font-size: 30px;
-        width: 500px;
-        height: 50px;
-    }
-    .login-fields img {
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-    }
+  .new-user-register-page .company-title {
+    font-size: 50px;
+  }
+  .new-user-register-page .company-title img {
+    width: 60px;
+    height: 60px;
+  }
+  .login-user-page {
+    font-size: 20px;
+    width: 500px;
+    margin-top: 350px;
+  }
+  .remember-me-checkbox p {
+    font-size: 20px;
+  }
+  .remember-me-checkbox input {
+    width: 15px;
+    font-size: 30px;
+    height: 15px;
+  }
+  .login-remember-input {
+    margin-top: 30px;
+  }
+  .login-register-link {
+    margin: 20px 0 30px 0;
+  }
+  .login-button button {
+    padding: 20px 0 20px 0;
+    font-size: 30px;
+  }
+  .login-fields input {
+    font-size: 30px;
+    width: 500px;
+    height: 50px;
+  }
+  .login-fields img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
 }
 
 @media (min-width: 1280px) {
-    .login-user-page {
-        margin-top: 50px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-    .register-page-view {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .register-horizontal-page {
-        margin: 0 150px 0 140px;
-        background-color: black;
-        border: 0.5px solid black;
-        height: 600px;
-    }
-    .register-title {
-        width: 500px;
-        letter-spacing: 8px;
-        font-weight: 400;
-    }
-    .login-user-page .register-horizontal-page {
-        transform: rotate(180deg);
-    }
+  .login-user-page {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .register-page-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .register-horizontal-page {
+    margin: 0 150px 0 140px;
+    background-color: black;
+    border: 0.5px solid black;
+    height: 600px;
+  }
+  .register-title {
+    width: 500px;
+    letter-spacing: 8px;
+    font-weight: 400;
+  }
+  .login-user-page .register-horizontal-page {
+    transform: rotate(180deg);
+  }
 }
