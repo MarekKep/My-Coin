@@ -83,6 +83,10 @@ td {
   font-size: 20px;
   margin-top: 10px;
   cursor: pointer;
+ 
+}
+.wallet-convert-button:hover {
+  box-shadow: 10px 5px 5px gray;
 }
 .wallet-description div {
   padding: 10px 0 10px 0;

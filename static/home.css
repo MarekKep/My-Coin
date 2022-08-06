@@ -8,6 +8,9 @@
   border: none;
   margin-top: 20px;
 }
+.user-home-page-title {
+  display: none;
+}
 .user-home-page img {
   width: 270px;
   height: 180px;
@@ -19,12 +22,14 @@
   width: 340px;
   margin: 20px 0 30px 0;
 }
-.user-home-page h2,
-a {
-  text-decoration: none;
+.user-home-page a {
+  color: black;
+  font-style: italic;
+  text-decoration: underline;
 }
 .user-home-page h2 {
   margin-bottom: 15px;
+  text-decoration: none;
 }
 .user-home-page-scroll {
   overflow-y: auto;
@@ -32,6 +37,11 @@ a {
 }
 
 @media (min-width: 768px) {
+  .user-home-page-title {
+    display: block;
+    margin-bottom: 100px;
+    font-size: 20px;
+  }
   .user-home-page {
     margin-top: 100px;
   }
@@ -56,6 +66,9 @@ a {
 }
 
 @media (min-width: 1280px) {
+  .user-home-page-title {
+    margin: 0;
+  }
   .user-home-page .user-home-page-scroll {
     display: flex;
     height: 350px;

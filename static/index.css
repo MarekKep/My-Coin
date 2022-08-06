@@ -102,7 +102,7 @@ header .user-dropdown-menu {
   background-color: #b9c1c7;
 }
 header .user-dropdown {
-  z-index: 51;
+  z-index: 10;
 }
 header .user-dropdown .user-icon {
   cursor: pointer;
@@ -124,18 +124,29 @@ header .hamburger {
   top: 50%;
   transform: translateY(-7px) rotate(-45deg);
 }
+.hamburger.active .bar {
+  background-color: white;
+}
 header .nav-menu {
   position: fixed;
   left: -100%;
   gap: 0;
   font-size: 30px;
-  top: 70px;
+  top: 0px;
   height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
   flex-direction: column;
   z-index: 50;
   width: 100%;
   text-align: center;
   transition: 0.3s;
+}
+header .nav-menu a {
+  color: white;
+}
+header .hamburger {
+  z-index: 99;
 }
 header .nav-item {
   margin: 16px 0;
@@ -198,6 +209,13 @@ footer {
 }
 
 @media (min-width: 768px) {
+  header .nav-menu {
+    background-color: unset;
+    backdrop-filter: unset;
+  }
+  header .nav-menu a {
+    color: black;
+  }
   header .company-title {
     font-size: 35px;
   }
