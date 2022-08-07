@@ -9,48 +9,48 @@
         <label class="form-check-label" for="flexCheckDefault">
             <h2>Income</h2>
             <div class="income-cashflow">
-            <div class="mb-3">
-                <h3>Amount</h3>
-                <input autocomplete="off" autofocus class="amount-cashflow" id="income-amount" name="income_count" type="number" min = 1>
+                <div class="cashflow-data">
+                    <h3>Amount</h3>
+                    <input autocomplete="off" autofocus class="amount-cashflow" id="income-amount" name="income_count" type="number" min = 1>
+                </div>
+                <div class="cashflow-data">
+                    <h3>Currency</h3>
+                    <select name="currency_income" id="currency-income">
+                        <option id="currency-value" value="uah">UAH</option>
+                        <option id="currency-value" value="usd">USD</option>
+                        <option id="currency-value" value="eur">EUR</option>
+                    </select>
+                </div>
+                <div class="cashflow-data">
+                    <h3>Category</h3>
+                    <select name="category_income" id="category">
+                        <option id="category-value" value="salary">Salary</option>
+                        <option id="category-value" value="other">Other</option>
+                    </select>
+                </div>
             </div>
-            <div class="mb-3">
-                <h3>Currency</h3>
-                <select name="currency_income" id="currency-income">
-                    <option id="currency-value" value="uah">UAH</option>
-                    <option id="currency-value" value="usd">USD</option>
-                    <option id="currency-value" value="eur">EUR</option>
-                </select>
+            <div class="submit-button-income">
+                <button type="submit">Add income</button>
             </div>
-            <div class="mb-3">
-                <h3>Category</h3>
-                <select name="category_income" id="category">
-                    <option id="category-value" value="salary">Salary</option>
-                    <option id="category-value" value="other">Other</option>
-                </select>
-            </div>
-        </div>
-        <div class="submit-button-income">
-        <button type="submit">Add income</button>
-    </div>
         </label>
         <hr class="cashflow-upper-line">
         <label class="form-check-label" for="flexCheckDefault">
             <h2>Expense</h2>
             <div class="expense-cashflow">
-            <div class="mb-3">
-                <h3>Amount</h3>
-                <input autocomplete="off" autofocus class="amount-cashflow" id="expense_count" name="expense_count" type="number" min = 1>
-            </div>
-            <div class="mb-3">
-                <h3>Currency</h3>
+                <div class="cashflow-data">
+                    <h3>Amount</h3>
+                    <input autocomplete="off" autofocus class="amount-cashflow" id="expense_count" name="expense_count" type="number" min = 1>
+                </div>
+                <div class="cashflow-data">
+                    <h3>Currency</h3>
                     <select name="currency_expense" id="currency-expense">
                         <option id="currency-value" value="uah">UAH</option>
                         <option id="currency-value" value="usd">USD</option>
                         <option id="currency-value" value="eur">EUR</option>
                     </select>
-            </div>
-            <div class="mb-3">
-                <h3>Category</h3>
+                </div>
+                <div class="cashflow-data">
+                    <h3>Category</h3>
                     <select name="category_expense" id="category-expense">
                         <option id="category-value" value="entertainment">Entertainment</option>
                         <option id="category-value" value="grocery">Grocery</option>
@@ -60,11 +60,11 @@
                         <option id="category-value" value="householding">Householding</option>
                         <option id="category-value" value="other">Other</option>
                     </select>
+                </div>
             </div>
-        </div>
-        <div class="submit-button-expense">
-            <button type="submit">Add expense</button>
-        </div>
+            <div class="submit-button-expense">
+                <button type="submit">Add expense</button>
+            </div>
         </label>
     </form>
 {% endblock %}

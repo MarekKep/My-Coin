@@ -12,44 +12,36 @@
                     <option id="currency-value" value="UAH">UAH</option>
                     <option id="currency-value" value="USD">USD</option>
                     <option id="currency-value" value="EUR">EUR</option>
-                    </select>
+                </select>
             </label>
             <div class="wallet-description">
-                    <details>
-                        <summary class="wallet-details-title">Details</summary>
-                        <div>
-                            <h6 class="details-currency">in EUR: {{cash_eur}}</h6>
-                            <h6 class="details-currency">in USD: {{cash_usd}}</h6>
-                            <h6 class="details-currency">in UAH: {{cash_uah}}</h6>
-                        </div>
-                        <div>
-                            <h6 class="details-currency">UAH income: {{uah_income}}</h6>
-                            <h6 class="details-currency">USD income: {{usd_income}}</h6>
-                            <h6 class="details-currency">EUR income: {{eur_income}}</h6>
-                        </div>
-                        <div>
-                            <h6 class="details-currency">UAH expense: {{uah_expence}}</h6>
-                            <h6 class="details-currency">USD expense: {{usd_expence}}</h6>
-                            <h6 class="details-currency">EUR expense: {{eur_expence}}</h6>
-                        </div>
-                    </details>            
+                <details>
+                    <summary class="wallet-details-title">Details</summary>
+                    <div>
+                        <h6 class="details-currency">in EUR: {{cash_eur}}</h6>
+                        <h6 class="details-currency">in USD: {{cash_usd}}</h6>
+                        <h6 class="details-currency">in UAH: {{cash_uah}}</h6>
+                    </div>
+                    <div>
+                        <h6 class="details-currency">UAH income: {{uah_income}}</h6>
+                        <h6 class="details-currency">USD income: {{usd_income}}</h6>
+                        <h6 class="details-currency">EUR income: {{eur_income}}</h6>
+                    </div>
+                    <div>
+                        <h6 class="details-currency">UAH expense: {{uah_expence}}</h6>
+                        <h6 class="details-currency">USD expense: {{usd_expence}}</h6>
+                        <h6 class="details-currency">EUR expense: {{eur_expence}}</h6>
+                    </div>
+                </details>            
             </div>
-                <button class="wallet-convert-button" type="submit">Convert</button>
+            <button class="wallet-convert-button" type="submit">Convert</button>
         </div>
         <hr class="wallet-upper-line">
     </form> 
     
     
     <form class="wallet-page-history" action="/wallet" method="get">
-        <!-- <div class="wallet-history-title">
-            <h3 class="wallet-amount">Amount</h3>
-            <h3 class="wallet-currency">Curr.</h3>
-            <h3 class="wallet-category">Category</h3>
-            <h3>Date</h3>
-            <h3></h3>
-        </div> -->
         <table id="tabula" class="table table-dark table-sm" >
-            
             {% for coin in my_coin %}
                 <tr class="wallet-history-description">
                     <td class="wallet-history-income">{{coin["count"]}}</td>
@@ -59,8 +51,7 @@
                     <td class="wallet-history">{{coin["strftime('%d.%m.%Y',daytime)"]}}</td>
                     <td class="wallet-history"><a href="{{ url_for('delete', deleted_id = coin["id"]) }}"</a><img class="trash-icon" src="../static/img/trash-icon.svg" alt="delete button"></button></td>
                 </tr>
-            {% endfor %}
-            
+            {% endfor %}   
     </form>
     
 {% endblock %}

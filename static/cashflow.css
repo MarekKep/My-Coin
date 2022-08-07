@@ -21,10 +21,10 @@
   font-size: 25px;
   padding-bottom: 10px;
 }
-.mb-3 {
+.cashflow-data {
   padding: 0 5px 0 5px;
 }
-.mb-3 input {
+.cashflow-data input {
   align-items: center;
 }
 .submit-button-expense,
@@ -66,7 +66,7 @@
   border-top: black;
   text-align: center;
 }
-.mb-3 {
+.cashflow-data {
   display: flex;
   flex-direction: column;
   justify-content: center;
